@@ -1,3 +1,5 @@
+'use client'
+
 import { Label } from '@radix-ui/react-label'
 import { Button } from '../ui/button'
 import {
@@ -53,7 +55,7 @@ export function SignIn() {
         >
           Login
         </Button>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" disabled>
           Login with Google
         </Button>
       </CardFooter>
