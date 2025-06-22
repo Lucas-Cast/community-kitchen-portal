@@ -1,24 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jwtVerify } from 'jose'
 import { environment } from '@/environment'
+import { TokenValidateResponse } from './shared/types/auth'
+import { createAxiosClient } from './shared/factories/axios-client'
 
 export async function middleware(request: NextRequest) {
-  const token = request.cookies.get('authToken')?.value
+  const authToken = request.cookies.get('authToken')?.value
+  const { post } = createAxiosClient(environment.userControllerApiUri, authToken)
 
-  if (!token && !request.nextUrl.pathname.startsWith('/auth')) {
-    return NextResponse.redirect(new URL('/auth', request.url))
-  }
-
-  if (token) {
-    const secret = new TextEncoder().encode(environment.jwtSecret)
-
-    return jwtVerify(token, secret)
-      .then(() => NextResponse.next())
-      .catch(() => {
-        return NextResponse.redirect(new URL('/auth', request.url))
-      })
-  }
-  return NextResponse.next()
+  return await post<TokenValidateResponse>('/auth/validate')
+    .then(() => NextResponse.next())
+    .catch(() => NextResponse.redirect(new URL('/auth', request.url)))
 }
 
 export const config = {
