@@ -14,3 +14,8 @@ export interface SignInResponse {
   token: string
   usuario: User
 }
+
+export interface TokenValidateResponse {
+  valid: boolean
+  user: User
+}

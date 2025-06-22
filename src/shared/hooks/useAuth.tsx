@@ -2,14 +2,13 @@ import { useCallback, useMemo } from 'react'
 import Cookies from 'js-cookie'
 
 import { environment } from '@/environment'
-
-import { useApiService } from './useApiService'
-import { SignInRequest, SignInResponse } from '../types/auth'
+import { SignInRequest, SignInResponse, TokenValidateResponse, User } from '../types/auth'
 import { useRouter } from 'next/navigation'
 import { useUserContext } from '../contexts/UserContext'
+import { createAxiosClient } from '../factories/axios-client'
 
 export function useAuth() {
-  const { post } = useApiService(environment.userControllerApiUri)
+  const { post, get } = createAxiosClient(environment.userControllerApiUri)
   const { setUser } = useUserContext()
   const router = useRouter()
 
@@ -34,12 +33,20 @@ export function useAuth() {
           throw error
         })
     },
-    [post, router]
+    [post, router, setUser]
   )
+
+  const tokenValidate = useCallback(async () => {
+    const tokenValidateResponse = await post<TokenValidateResponse>('/auth/validate')
+    const userResponse = await get<User>(`usuarios/${tokenValidateResponse.data.user.id}`)
+    setUser(userResponse.data)
+  }, [post, setUser, get])
+
   return useMemo(
     () => ({
       signIn,
+      tokenValidate,
     }),
-    [signIn]
+    [signIn, tokenValidate]
   )
 }
