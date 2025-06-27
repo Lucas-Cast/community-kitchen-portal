@@ -6,6 +6,7 @@ import { SignInRequest, SignInResponse, TokenValidateResponse, User } from '../t
 import { useRouter } from 'next/navigation'
 import { useUserContext } from '../contexts/UserContext'
 import { createAxiosClient } from '../factories/axios-client'
+import { Routes } from '../enums/routes'
 
 export function useAuth() {
   const { post, get } = createAxiosClient(environment.userControllerApiUri)
@@ -14,7 +15,7 @@ export function useAuth() {
 
   const signIn = useCallback(
     async (request: SignInRequest) => {
-      await post<SignInResponse>('/auth/login', request)
+      await post<SignInResponse>(Routes.AUTH_LOGIN, request)
         .then(response => {
           const token = response.data.token
 

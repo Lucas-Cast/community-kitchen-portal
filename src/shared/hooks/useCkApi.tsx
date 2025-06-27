@@ -1,9 +1,11 @@
+import { environment } from '@/environment'
 import { useMemo } from 'react'
+import { createAxiosClient } from '../factories/axios-client'
 
 export function useCkApi() {
-  // const axiosInstance = createAxiosClient(environment.ckApiUri)
-
-  return useMemo(() => {
-    return
+  const axiosInstance = useMemo(() => {
+    return createAxiosClient(environment.ckApiUri)
   }, [])
+
+  return axiosInstance
 }
