@@ -5,11 +5,14 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { UserDropdown } from './UserDropdown'
+import { SidebarItems } from './SidebarItems'
 
 export function AppSidebar() {
   return (
@@ -17,6 +20,10 @@ export function AppSidebar() {
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup />
+        <SidebarGroupLabel>Cozinha Comunitária</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarItems />
+        </SidebarGroupContent>
         <SidebarGroup />
       </SidebarContent>
       <SidebarFooter>
