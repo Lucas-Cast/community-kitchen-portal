@@ -1,6 +1,7 @@
 'use client'
 
 import PageContainer from '@/components/PageContainer'
+import WeeklyMenusAccordion from '@/components/WeeklyMenusAccordion'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { useEffect } from 'react'
 
@@ -13,7 +14,7 @@ export default function Home() {
 
   return (
     <PageContainer>
-      <div></div>
+      <WeeklyMenusAccordion />
     </PageContainer>
   )
 }
