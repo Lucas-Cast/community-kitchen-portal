@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { environment } from '@/environment'
-import { TokenValidateResponse } from './shared/types/auth'
-import { createAxiosClient } from './shared/factories/axios-client'
+import { userService } from './shared/services/user/user'
 
 export async function middleware(request: NextRequest) {
-  const authToken = request.cookies.get('authToken')?.value
-  const { post } = createAxiosClient(environment.userControllerApiUri, authToken)
-
-  return await post<TokenValidateResponse>('/auth/validate')
+  return await userService
+    .tokenValidate()
     .then(() => NextResponse.next())
     .catch(() => NextResponse.redirect(new URL('/auth', request.url)))
 }

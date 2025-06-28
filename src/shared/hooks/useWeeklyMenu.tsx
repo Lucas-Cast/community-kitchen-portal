@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useCkApi } from './useCkApi'
-import { Routes } from '../enums/routes'
 import { WeeklyMenuResponse } from '../types/weekly-menus'
+import { menuService } from '../services/menu/menu'
 
 export function useWeeklyMenus() {
-  const { get } = useCkApi()
   const [weeklyMenuData, setWeeklyMenuData] = useState<{
     data: WeeklyMenuResponse | undefined
     error: string | undefined
@@ -17,10 +15,11 @@ export function useWeeklyMenus() {
 
   const fetchWeeklyMenus = useCallback(async () => {
     setWeeklyMenuData(prev => ({ ...prev, isLoading: true }))
-    await get<WeeklyMenuResponse>(Routes.LIST_WEEKLY_MENUS)
+    await menuService
+      .getWeeklyMenus()
       .then(response => {
         setWeeklyMenuData({
-          data: response.data,
+          data: response,
           error: undefined,
           isLoading: false,
         })
@@ -28,7 +27,7 @@ export function useWeeklyMenus() {
       .catch(error => {
         setWeeklyMenuData({
           data: undefined,
-          error: error.message ?? 'Erro ao buscar os menus semanais',
+          error: error.message ?? 'Erro ao buscar menus semanais',
           isLoading: false,
         })
       })
