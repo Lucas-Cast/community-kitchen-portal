@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useCkApi } from './useCkApi'
 import { Routes } from '../enums/routes'
-import { WeeklyMenu } from '../types/weekly-menus'
+import { WeeklyMenuResponse } from '../types/weekly-menus'
 
 export function useWeeklyMenus() {
   const { get } = useCkApi()
   const [weeklyMenuData, setWeeklyMenuData] = useState<{
-    data: WeeklyMenu | undefined
+    data: WeeklyMenuResponse | undefined
     error: string | undefined
     isLoading: boolean
   }>({
@@ -17,7 +17,7 @@ export function useWeeklyMenus() {
 
   const fetchWeeklyMenus = useCallback(async () => {
     setWeeklyMenuData(prev => ({ ...prev, isLoading: true }))
-    await get<WeeklyMenu>(Routes.LIST_WEEKLY_MENUS)
+    await get<WeeklyMenuResponse>(Routes.LIST_WEEKLY_MENUS)
       .then(response => {
         setWeeklyMenuData({
           data: response.data,

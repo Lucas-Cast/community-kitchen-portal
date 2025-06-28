@@ -1,5 +1,6 @@
 import { DailyEvent } from './daily-event'
 import { Dish } from './dish'
+import { WeekDay } from '../enums/week-days'
 
 export interface WeeklyMenu {
   id: number
@@ -10,3 +11,5 @@ export interface WeeklyMenu {
   dishes: Dish[]
   dailyEvent: DailyEvent
 }
+
+export type WeeklyMenuResponse = Record<WeekDay, WeeklyMenu[]>
