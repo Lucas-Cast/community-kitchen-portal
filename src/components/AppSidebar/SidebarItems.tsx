@@ -26,8 +26,8 @@ const items = [
     icon: Calendar,
     subItems: [
       {
-        title: 'Weekly Menus',
-        url: '#',
+        title: 'Gerenciar Menus',
+        url: '/menu',
         icon: Calendar,
       },
       {

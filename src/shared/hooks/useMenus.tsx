@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { WeeklyMenuResponse } from '../types/menu'
 import { menuService } from '../services/menu/menu'
+import { Menu } from '../types/menu'
 
-export function useWeeklyMenus() {
-  const [weeklyMenuData, setWeeklyMenuData] = useState<{
-    data: WeeklyMenuResponse | undefined
+export function useMenus() {
+  const [menuData, setMenuData] = useState<{
+    data: Menu[] | undefined
     error: string | undefined
     isLoading: boolean
   }>({
@@ -13,19 +13,19 @@ export function useWeeklyMenus() {
     isLoading: false,
   })
 
-  const fetchWeeklyMenus = useCallback(async () => {
-    setWeeklyMenuData(prev => ({ ...prev, isLoading: true }))
+  const fetchMenus = useCallback(async () => {
+    setMenuData(prev => ({ ...prev, isLoading: true }))
     await menuService
-      .getWeeklyMenus()
+      .getMenus()
       .then(response => {
-        setWeeklyMenuData({
+        setMenuData({
           data: response,
           error: undefined,
           isLoading: false,
         })
       })
       .catch(error => {
-        setWeeklyMenuData({
+        setMenuData({
           data: undefined,
           error: error.message ?? 'Erro ao buscar menus semanais',
           isLoading: false,
@@ -34,10 +34,10 @@ export function useWeeklyMenus() {
   }, [])
 
   useEffect(() => {
-    fetchWeeklyMenus()
-  }, [fetchWeeklyMenus])
+    fetchMenus()
+  }, [fetchMenus])
 
   return useMemo(() => {
-    return weeklyMenuData
-  }, [weeklyMenuData])
+    return menuData
+  }, [menuData])
 }

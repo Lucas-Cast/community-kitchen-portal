@@ -1,11 +1,12 @@
 'use client'
 
+import MenuTable from '@/components/MenuTable'
 import PageContainer from '@/components/PageContainer'
 
 export default function Page() {
   return (
     <PageContainer>
-      <div className="container mx-auto py-10">test</div>
+      <MenuTable />
     </PageContainer>
   )
 }
