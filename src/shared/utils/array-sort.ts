@@ -1,5 +1,5 @@
 import { WeekDay } from '@/shared/enums/week-days'
-import { WeeklyMenu } from '../types/weekly-menus'
+import { Menu } from '../types/menu'
 
 const WEEK_ORDER = [
   WeekDay.SUNDAY,
@@ -11,7 +11,7 @@ const WEEK_ORDER = [
   WeekDay.SATURDAY,
 ]
 
-export const sortWeekDays = (entries: [string, WeeklyMenu[]][]) => {
+export const sortWeekDays = (entries: [string, Menu[]][]) => {
   return entries.sort(([dayA], [dayB]) => {
     const indexA = WEEK_ORDER.indexOf(dayA as WeekDay)
     const indexB = WEEK_ORDER.indexOf(dayB as WeekDay)

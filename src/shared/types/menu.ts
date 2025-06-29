@@ -2,7 +2,7 @@ import { DailyEvent } from './daily-event'
 import { Dish } from './dish'
 import { WeekDay } from '../enums/week-days'
 
-export interface WeeklyMenu {
+export interface Menu {
   id: number
   deactivationDate: string | null
   activationDate: string
@@ -12,4 +12,4 @@ export interface WeeklyMenu {
   dailyEvent: DailyEvent
 }
 
-export type WeeklyMenuResponse = Record<WeekDay, WeeklyMenu[]>
+export type WeeklyMenuResponse = Record<WeekDay, Menu[]>

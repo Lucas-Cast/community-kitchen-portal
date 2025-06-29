@@ -1,6 +1,6 @@
 import { createAxiosClient } from '@/shared/factories/axios-client'
 import { environment } from '@/environment'
-import { WeeklyMenuResponse } from '@/shared/types/weekly-menus'
+import { Menu, WeeklyMenuResponse } from '@/shared/types/menu'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
 
@@ -9,6 +9,16 @@ class MenuService {
 
   constructor() {
     this.client = createAxiosClient(environment.ckApiUri)
+  }
+
+  async getMenus(): Promise<Menu[]> {
+    return await this.client
+      .get<Menu[]>(Routes.LIST_MENUS)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error fetching menus:', err)
+        throw err
+      })
   }
 
   async getWeeklyMenus(): Promise<WeeklyMenuResponse> {

@@ -9,13 +9,9 @@ import {
 import { removeSeconds } from '@/shared/utils/date-format'
 import { sortWeekDays } from '@/shared/utils/array-sort'
 import { SquarePen } from 'lucide-react'
-import { WeeklyMenuResponse } from '@/shared/types/weekly-menus'
+import { WeeklyMenuResponse } from '@/shared/types/menu'
 
-interface WeeklyMenusAccordionProps {
-  children?: React.ReactNode
-}
-
-const WeeklyMenusAccordion: React.FC<WeeklyMenusAccordionProps> = () => {
+const WeeklyMenusAccordion: React.FC = () => {
   const weeklyMenusData = useWeeklyMenus()
   const [displayMenus] = useOptimistic(weeklyMenusData.data || ({} as WeeklyMenuResponse))
 

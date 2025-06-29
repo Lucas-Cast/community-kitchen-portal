@@ -3,4 +3,5 @@ export enum Routes {
   LIST_WEEKLY_MENUS = '/menus/list-weekly-menus',
   TOKEN_VALIDATE = '/auth/validate',
   USER_BY_ID = '/usuarios/',
+  LIST_MENUS = '/menus',
 }
