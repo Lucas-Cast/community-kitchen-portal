@@ -1,5 +1,5 @@
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@radix-ui/react-collapsible'
-import { Calendar, ChevronDown, Home, Inbox, Pizza, Search, Settings, UtensilsCrossed } from 'lucide-react'
+import { Calendar, ChevronDown, Home, Inbox, Pizza, Search, UtensilsCrossed } from 'lucide-react'
 import {
   SidebarMenuItem,
   SidebarMenuButton,

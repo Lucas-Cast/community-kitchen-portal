@@ -45,12 +45,7 @@ export function ActionsColumn<T>({
     },
   })
 
-  const {
-    data: editData,
-    fetchData,
-    setData: setEditData,
-    loading: isFetchingEditData,
-  } = useFetchResource<T>()
+  const { data: editData, fetchData, setData: setEditData } = useFetchResource<T>()
 
   const handleEditOpen = async () => {
     setEditModalOpen(true)
@@ -75,13 +70,6 @@ export function ActionsColumn<T>({
           className="bg-gray-900 text-white border border-gray-600 shadow-xl min-w-[180px] rounded-lg"
         >
           <DropdownMenuLabel className="px-3 py-2 text-sm">{label}</DropdownMenuLabel>
-
-          <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText((rowData as any).id?.toString() || '')}
-            className="hover:bg-gray-700/50 cursor-pointer px-3 py-2"
-          >
-            📋 Copiar ID
-          </DropdownMenuItem>
 
           {editUrl && EditForm && (
             <DropdownMenuItem

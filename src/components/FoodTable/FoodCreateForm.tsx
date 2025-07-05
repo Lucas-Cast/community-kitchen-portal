@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Food } from '@/shared/types/food'
 import { useCreateFood } from '@/shared/hooks/foods/useCreateFood'
@@ -22,7 +21,7 @@ export default function CreateFoodForm({ onClose, onCreate }: Props) {
     sodium: '',
   })
 
-  const { create, loading, error } = useCreateFood(food => {
+  const { create } = useCreateFood(food => {
     onCreate?.(food)
     onClose()
   })

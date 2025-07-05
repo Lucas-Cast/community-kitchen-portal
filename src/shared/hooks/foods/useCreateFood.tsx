@@ -14,9 +14,9 @@ export function useCreateFood(onSuccess?: (food: Food) => void) {
       const newFood = await foodService.create(food)
       onSuccess?.(newFood)
       toast.success('Alimento criado com sucesso!')
-    } catch (err: any) {
+    } catch (err) {
+      console.log(err)
       toast.error('Erro ao criar alimento!')
-      setError(err.message || 'Erro desconhecido')
     } finally {
       setLoading(false)
     }
