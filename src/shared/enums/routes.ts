@@ -6,5 +6,6 @@ export enum Routes {
   LIST_MENUS = '/menus',
   LIST_DISHES = '/dishes',
   LIST_ACTIVE_MENU_REQUIREMENTS = '/menu-requirements/get-active-menu-requirements',
-  LIST_FOODS = '/foods'
+  LIST_FOODS = '/foods',
+  LIST_CUSTOMERS = '/customers',
 }
