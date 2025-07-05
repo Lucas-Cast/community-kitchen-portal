@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { dishService } from '../services/dish/dish'
-import { Dish } from '../types/dish'
+import { dishService } from '../../services/dish/dish'
+import { Dish } from '../../types/dish'
 
 export function useDishes() {
   const [dishData, setDishData] = useState<{

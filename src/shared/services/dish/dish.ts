@@ -3,6 +3,7 @@ import { environment } from '@/environment'
 import { Dish } from '@/shared/types/dish'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
+import { UpdateDishPayload } from '@/shared/types/update-dish-payload'
 
 class DishService {
   private readonly client: AxiosInstance
@@ -20,6 +21,11 @@ class DishService {
         throw err
       })
   }
+
+  async update(id: number, payload: UpdateDishPayload): Promise<Dish> {
+    const response = await this.client.put<Dish>(`/dishes/${id}`, payload)
+  return response.data
+}
 }
 
 export const dishService = new DishService()
