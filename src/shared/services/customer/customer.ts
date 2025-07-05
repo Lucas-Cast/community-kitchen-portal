@@ -25,6 +25,10 @@ class CustomerService {
     const response = await this.client.post<Customer>('/customers', customer)
     return response.data
   }
+  async getAverageAge(): Promise<number> {
+    const response = await this.client.get<{ averageAge: number }>('/customers/average/age')
+    return response.data.averageAge
+  }
 }
 
 export const customerService = new CustomerService()
