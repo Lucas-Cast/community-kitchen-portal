@@ -29,7 +29,7 @@ export default function CustomerTable() {
   const columns = getColumns(handleDelete)
 
   return (
-    <div className="container mx-auto py-5 space-y-6">
+    <div className="container mx-auto py-5">
       <div className="flex justify-between items-center mb-4">
         <AverageCustomerAgeCard averageAge={averageAge} loading={loading} />
         <CustomerCreateButton onCreate={handleCreate} />
