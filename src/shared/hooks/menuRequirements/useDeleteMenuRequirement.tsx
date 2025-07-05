@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { menuRequirementService } from '@/shared/services/menuRequirement/menuRequirement'
 import { toast } from 'sonner'
+import { AxiosError } from 'axios'
 
 export function useDeleteMenuRequirement(onSuccess?: () => void) {
   const [loading, setLoading] = useState(false)
@@ -12,14 +13,18 @@ export function useDeleteMenuRequirement(onSuccess?: () => void) {
       await menuRequirementService.deleteMenuRequirement(id)
       toast.success('Requisito removido com sucesso!')
       onSuccess?.()
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
-      if (err?.response?.status === 400) {
+
+      const axiosError = err as AxiosError
+
+      if (axiosError?.response?.status === 400) {
         toast.error('Não é possível remover: o requisito ainda está ativo.')
       } else {
         toast.error('Erro ao remover o requisito.')
       }
-      setError(err?.message || 'Erro inesperado')
+
+      setError(axiosError?.message || 'Erro inesperado')
       throw err
     } finally {
       setLoading(false)

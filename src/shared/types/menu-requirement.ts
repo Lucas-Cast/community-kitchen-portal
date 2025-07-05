@@ -1,4 +1,3 @@
-import { DailyEvent } from './daily-event'
 
 export interface MenuRequirement {
   id: number

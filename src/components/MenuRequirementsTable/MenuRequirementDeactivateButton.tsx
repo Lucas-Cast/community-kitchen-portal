@@ -15,7 +15,7 @@ export default function MenuRequirementDeactivateButton({ onDeactivate }: Props)
   const [open, setOpen] = useState(false)
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const { data } = useActiveMenuRequirements()
-  const { deactivate, loading } = useDeactivateMenuRequirement(menu => {
+  const { deactivate } = useDeactivateMenuRequirement(menu => {
     onDeactivate?.(menu)
     setOpen(false)
   })

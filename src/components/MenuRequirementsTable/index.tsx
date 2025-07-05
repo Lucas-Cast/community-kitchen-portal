@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useActiveMenuRequirements } from '@/shared/hooks/menuRequirements/useActiveMenuRequirements'
 import { getColumns } from './columns'
 import { VerticalDataTable } from '../VerticalDataTable'
 import { MenuRequirement } from '@/shared/types/menu-requirement'
@@ -9,6 +8,7 @@ import { MenuRequirementEditForm } from './MenuRequirementEditForm'
 import MenuRequirementDeactivateButton from './MenuRequirementDeactivateButton'
 import { useMenuRequirements } from '@/shared/hooks/menuRequirements/useMenuRequirements'
 import { useDeleteMenuRequirement } from '@/shared/hooks/menuRequirements/useDeleteMenuRequirement'
+import { useDeactivateMenuRequirement } from '@/shared/hooks/menuRequirements/useDeactivateMenuRequirement'
 
 
 export default function MenuRequirementTable() {
@@ -16,6 +16,8 @@ export default function MenuRequirementTable() {
   const [localData, setLocalData] = useState<MenuRequirement[]>(data || [])
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [selectedMenuRequirement, setSelectedMenuRequirement] = useState<MenuRequirement | null>(null)
+  const { deleteMenuRequirement } = useDeleteMenuRequirement()
+  const { deactivate } = useDeactivateMenuRequirement()
 
   useEffect(() => {
     setLocalData(data || [])
@@ -25,16 +27,27 @@ export default function MenuRequirementTable() {
     setLocalData(prev => [...prev, newMenuRequirement])
   }
 
-  const { deleteMenuRequirement } = useDeleteMenuRequirement()
-
   async function handleDelete(menuRequirementToDelete: MenuRequirement) {
-  try {
-    await deleteMenuRequirement(menuRequirementToDelete.id)
-    setLocalData(prev => prev.filter(mr => mr.id !== menuRequirementToDelete.id))
-  } catch (error) {
+    try {
+      await deleteMenuRequirement(menuRequirementToDelete.id)
+      setLocalData(prev => prev.filter(mr => mr.id !== menuRequirementToDelete.id))
+    } catch (error) {
 
-    console.error('Erro ao deletar menu requirement:', error)
+      console.error('Erro ao deletar menu requirement:', error)
+    }
   }
+
+  async function handleDeactivate(menuRequirement: MenuRequirement) {
+    try {
+      await deactivate(menuRequirement.id);
+      setLocalData((prev) =>
+        prev.map((mr) =>
+          mr.id === menuRequirement.id ? { ...mr, isActive: false } : mr
+        )
+      )
+    } catch (error) {
+      console.error('Erro ao desativar menu requirement:', error);
+    }
   }
 
   function handleEdit(menuRequirementToEdit: MenuRequirement) {
@@ -59,7 +72,7 @@ export default function MenuRequirementTable() {
     <div className="container mx-auto py-10 space-y-4">
       <div className="flex justify-between mb-4">
         <CreateMenuRequirementButton onCreate={handleCreate} />
-        <MenuRequirementDeactivateButton onDeactivate={handleDelete} />
+        <MenuRequirementDeactivateButton onDeactivate={handleDeactivate} />
       </div>
       <VerticalDataTable
         columns={columns}
