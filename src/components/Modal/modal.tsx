@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from './dialog'
+} from '../ui/dialog'
 import { Button } from '../ui/button'
 import { ReactNode } from 'react'
 
@@ -26,6 +26,14 @@ interface ModalWrapperProps {
   hideFooter?: boolean
 }
 
+const sizeClasses: Record<NonNullable<ModalWrapperProps['size']>, string> = {
+  sm: 'w-[16rem] sm:w-[20rem]', // 256px - 320px
+  md: 'w-[32rem] sm:w-[40rem]', // 512px - 640px
+  lg: 'w-[48rem] sm:w-[60rem]', // 768px - 960px
+  xl: 'w-[64rem] sm:w-[80rem]', // 1024px - 1280px
+  full: 'w-full h-full max-w-none',
+}
+
 export const ModalWrapper = ({
   isOpen,
   onClose,
@@ -41,7 +49,7 @@ export const ModalWrapper = ({
 }: ModalWrapperProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
-      <DialogContent size={size} variant={variant}>
+      <DialogContent className={sizeClasses[size]} size={size} variant={variant}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
