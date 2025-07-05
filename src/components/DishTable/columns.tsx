@@ -3,7 +3,7 @@ import { Dish } from '@/shared/types/dish'
 import { Button } from '../ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
-import { DishEditForm } from '../DishEditForm'
+import { DishEditForm } from './DishEditForm'
 
 export const getColumns = (
   onDelete: (dish: Dish) => void,

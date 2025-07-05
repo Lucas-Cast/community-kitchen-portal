@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { Dish } from '@/shared/types/dish'
-import { useUpdateDishes} from '@/shared/hooks/dishes/useUpdateDishes'
+import { useUpdateDishes } from '@/shared/hooks/dishes/useUpdateDishes'
+import { Ingredient } from './Ingredient'
+import { useFoods } from '@/shared/hooks/foods/useFoods'
 
 type DishEditFormProps = {
   data: Dish
@@ -16,7 +18,23 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
     data.foods.map(f => ({ foodId: f.id, name: f.name, quantity: f.quantity }))
   )
 
+  const { data: allFoods = [] } = useFoods()
+
   const { updateDish, isUpdating } = useUpdateDishes()
+
+  function handleFoodChange(index: number, selectedName: string) {
+    const ingredient = allFoods.find(f => f.name === selectedName)
+    if (!ingredient) return
+
+    const updatedFoods = [...foods]
+    updatedFoods[index] = {
+      ...updatedFoods[index],
+      foodId: ingredient.id,
+      name: ingredient.name,
+      quantity: updatedFoods[index].quantity,
+    }
+    setFoods(updatedFoods)
+  }
 
   function handleQuantityChange(index: number, value: string) {
     const updatedFoods = [...foods]
@@ -61,30 +79,19 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
       </div>
 
       {foods.map((food, index) => (
-        <div key={food.foodId} className="border p-4 rounded bg-gray-50">
-          <div className="mb-2">
-            <label className="block text-sm font-medium">Ingrediente</label>
-            <input
-              type="text"
-              className="w-full px-3 py-2 border rounded bg-gray-100 text-black"
-              value={food.name}
-              readOnly
-              disabled
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Quantidade (g)</label>
-            <input
-              type="number"
-              className="w-full px-3 py-2 border rounded bg-white text-black"
-              value={food.quantity}
-              onChange={e => handleQuantityChange(index, e.target.value)}
-              required
-            />
-          </div>
-        </div>
+        <Ingredient
+          key={'food' + food.foodId}
+          food={food}
+          onQuantityChange={value => handleQuantityChange(index, value)}
+          onFoodChange={value => handleFoodChange(index, value)}
+        />
       ))}
+
+      {/* Teste */}
+      {/*       <Ingredient
+        onQuantityChange={value => console.log('Nova quantidade:', value)}
+        onFoodChange={value => console.log('Novo ingrediente:', value)}
+      /> */}
     </form>
   )
 }

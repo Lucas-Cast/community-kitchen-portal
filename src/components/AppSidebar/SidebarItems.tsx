@@ -17,7 +17,7 @@ const items = [
     icon: Home,
   },
   {
-    title: 'Dishes',
+    title: 'Pratos',
     url: '/dishes',
     icon: Inbox,
   },

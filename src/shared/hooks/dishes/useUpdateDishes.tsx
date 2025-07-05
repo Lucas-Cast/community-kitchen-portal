@@ -2,14 +2,13 @@ import { useState, useCallback } from 'react'
 import { toast } from 'sonner'
 import { Dish } from '@/shared/types/dish'
 import { dishService } from '@/shared/services/dish/dish'
-
-type DishUpdatePayload = Omit<Dish, 'id'>
+import { UpdateDishPayload } from '@/shared/types/update-dish-payload'
 
 export function useUpdateDishes(onSuccess?: () => void, onError?: (err: unknown) => void) {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const updateDish = useCallback(
-    async (dish: Dish, payload: Partial<Dish>) => {
+    async (dish: Dish, payload: UpdateDishPayload) => {
       try {
         setIsUpdating(true)
         const updated = await dishService.update(dish.id, payload)
