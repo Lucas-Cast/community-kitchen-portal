@@ -6,10 +6,12 @@ import { MenuRequirement } from '@/shared/types/menu-requirement'
 import CreateMenuRequirementButton from './MenuRequirementCreateButton'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { MenuRequirementEditForm } from './MenuRequirementEditForm'
+import MenuRequirementDeactivateButton from './MenuRequirementDeactivateButton'
+import { useMenuRequirements } from '@/shared/hooks/menuRequirements/useMenuRequirements'
 
 
-export default function ActiveMenuRequirementTable() {
-  const { data, isLoading, error } = useActiveMenuRequirements()
+export default function MenuRequirementTable() {
+  const { data, isLoading, error } = useMenuRequirements()
   const [localData, setLocalData] = useState<MenuRequirement[]>(data || [])
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [selectedMenuRequirement, setSelectedMenuRequirement] = useState<MenuRequirement | null>(null)
@@ -46,8 +48,9 @@ export default function ActiveMenuRequirementTable() {
 
   return (
     <div className="container mx-auto py-10 space-y-4">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between mb-4">
         <CreateMenuRequirementButton onCreate={handleCreate} />
+        <MenuRequirementDeactivateButton onDeactivate={handleDelete} />
       </div>
       <VerticalDataTable
         columns={columns}

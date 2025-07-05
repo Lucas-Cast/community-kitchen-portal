@@ -41,16 +41,26 @@ async updateMenuRequirements(id: number, payload: Partial<MenuRequirement>): Pro
     })
 }
 
-async createMenuRequirements(food: Partial<MenuRequirement>): Promise<MenuRequirement> {
+async createMenuRequirements(menuRequirement: Partial<MenuRequirement>): Promise<MenuRequirement> {
   return await this.client
-    .post<MenuRequirement>(Routes.LIST_MENU_REQUIREMENTS, food)
+    .post<MenuRequirement>(Routes.LIST_MENU_REQUIREMENTS, menuRequirement)
     .then(res => res.data)
     .catch(err => {
       console.error('Error creating menu requirements:', err)
       throw err
     })
-}
+  }
 
+  async deactivateMenuRequirement(id: number): Promise<MenuRequirement> {
+    return await this.client
+      .patch<MenuRequirement>(`${Routes.LIST_MENU_REQUIREMENTS}/${id}/deactivate`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error(`Error deactivating menu requirement ${id}:`, err)
+        throw err
+      })
+  }
+  
 }
 
 export const menuRequirementService = new MenuRequirementService()
