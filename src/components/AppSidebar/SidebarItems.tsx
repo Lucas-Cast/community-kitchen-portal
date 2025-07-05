@@ -1,5 +1,5 @@
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@radix-ui/react-collapsible'
-import { Calendar, ChevronDown, Home, Inbox, Search, Settings, UtensilsCrossed } from 'lucide-react'
+import { Calendar, ChevronDown, Home, Inbox, Pizza, Search, Settings, UtensilsCrossed } from 'lucide-react'
 import {
   SidebarMenuItem,
   SidebarMenuButton,
@@ -43,9 +43,9 @@ const items = [
     icon: Search,
   },
   {
-    title: 'Food',
-    url: '#',
-    icon: Settings,
+    title: 'Comidas',
+    url: '/foods',
+    icon: Pizza,
   },
 ]
 

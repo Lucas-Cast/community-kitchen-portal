@@ -6,6 +6,7 @@ import { UserProvider } from '@/shared/contexts/UserContext'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/AppSidebar'
 import { usePathname } from 'next/navigation'
+import { Toaster } from 'sonner'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,6 +32,7 @@ export default function RootLayout({
             {pathname !== '/auth' && <AppSidebar />}
             <SidebarInset>
               {pathname !== '/auth' && <SidebarTrigger />}
+              <Toaster position="top-right" richColors />
 
               {children}
             </SidebarInset>
