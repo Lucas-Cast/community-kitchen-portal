@@ -3,8 +3,7 @@ import { DataTable } from '../DataTable'
 import { columns } from './columns'
 import { useOptimistic, useState } from 'react'
 import { Button } from '@/components/ui/button'
-
-import { Modal } from '../Modal/modal'
+import { Modal } from '../Modal'
 
 export default function MenuTable() {
   const menusData = useMenus()
@@ -12,24 +11,22 @@ export default function MenuTable() {
   const [open, setOpen] = useState(false)
 
   return (
-  <div className="container mx-auto py-10 space-y-4">
-
-    {/*Testando Modal*/}
-        <>
+    <div className="container mx-auto py-10 space-y-4">
+      {/* Testando Modal */}
       <Button onClick={() => setOpen(true)}>Abrir Modal de Teste</Button>
 
       <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={() => {
-          console.log('Salvar enviado!')
-          setOpen(false)
-        }}
-
-        title="Modal de Teste"
-        description="Preencha os campos abaixo"
-        size="lg"
-        variant="alert"
+        onConfirm={() => {setOpen(false)}}
+        title="Modal de Exemplo"
+        description="Descrição do modal teste"
+        confirmText="Confirmar"
+        cancelText="Cancelar"
+        size="xl"
+        variant="default"
+        animation="slide-down"
+        position="center"
       >
         <form className="space-y-4">
           <input
@@ -41,12 +38,11 @@ export default function MenuTable() {
             placeholder="Outro campo"
           />
         </form>
-      </Modal>
-    </>
 
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={optimisticMenusData} />
+      </Modal>
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={optimisticMenusData} />
+      </div>
     </div>
-    </div>
-    )
-  }
+  )
+}
