@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { MenuRequirement } from '../types/menu-requirement'
-import { menuRequirementService } from '../services/menuRequirement/menuRequirement'
+import { MenuRequirement } from '@/shared/types/menu-requirement'
+import { menuRequirementService } from '@/shared/services/menuRequirement/menuRequirement'
 
-export function useActiveMenuRequirements() {
+export function useMenuRequirements() {
   const [menuRequirementData, setmenuRequirement] = useState<{
     data: MenuRequirement[] | undefined
     error: string | undefined
@@ -13,10 +13,10 @@ export function useActiveMenuRequirements() {
     isLoading: false,
   })
 
-  const fetchActiveMenuRequirements = useCallback(async () => {
+  const fetchMenuRequirements = useCallback(async () => {
     setmenuRequirement(prev => ({ ...prev, isLoading: true }))
     await menuRequirementService
-      .getActiveMenuRequirements()
+      .getMenuRequirements()
       .then(response => {
         setmenuRequirement({
           data: response,
@@ -34,8 +34,8 @@ export function useActiveMenuRequirements() {
   }, [])
 
   useEffect(() => {
-    fetchActiveMenuRequirements()
-  }, [fetchActiveMenuRequirements])
+    fetchMenuRequirements()
+  }, [fetchMenuRequirements])
 
   return useMemo(() => {
     return menuRequirementData

@@ -1,4 +1,3 @@
-import { DailyEvent } from './daily-event'
 
 export interface MenuRequirement {
   id: number
@@ -20,5 +19,9 @@ export interface MenuRequirement {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
-  dailyEvent: DailyEvent[]
 }
+
+export type CreateMenuRequirement = Omit<
+  MenuRequirement,
+  'id' | 'isActive' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>
