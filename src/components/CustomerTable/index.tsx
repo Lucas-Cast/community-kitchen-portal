@@ -18,6 +18,7 @@ export default function CustomerTable() {
 
   function handleDelete(customerToDelete: Customer) {
     setData(prev => prev.filter(customer => customer.id !== customerToDelete.id))
+    refetch()
   }
 
   function handleEdit(updatedCustomer: Customer) {
