@@ -38,6 +38,8 @@ export function useFoods() {
   }, [fetchFoods])
 
   return useMemo(() => {
-    return foodData
-  }, [foodData])
+    return {
+      ...foodData
+    }
+  }, [foodData, fetchFoods])
 }
