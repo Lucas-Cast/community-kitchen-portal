@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Button } from '../ui/button'
-import { Food } from '@/shared/types/food'
 import { Modal } from '../Modal'
 import CreateCustomerForm from './CustomerCreateForm'
 import { Customer } from '@/shared/types/customer'

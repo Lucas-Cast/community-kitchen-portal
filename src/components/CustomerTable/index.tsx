@@ -21,16 +21,12 @@ export default function CustomerTable() {
     refetch()
   }
 
-  function handleEdit(updatedCustomer: Customer) {
-    setData(prev => prev.map(f => (f.id === updatedCustomer.id ? updatedCustomer : f)))
-  }
-
   function handleCreate(newCustomer: Customer) {
     setData(prev => [...prev, newCustomer])
     refetch()
   }
 
-  const columns = getColumns(handleDelete, handleEdit)
+  const columns = getColumns(handleDelete)
 
   return (
     <div className="container mx-auto py-5 space-y-6">

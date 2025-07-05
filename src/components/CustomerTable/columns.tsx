@@ -2,10 +2,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
 import { Customer } from '@/shared/types/customer'
 
-export const getColumns = (
-  onDelete: (customer: Customer) => void,
-  onEdit: (customer: Customer) => void
-): ColumnDef<Customer>[] => [
+export const getColumns = (onDelete: (customer: Customer) => void): ColumnDef<Customer>[] => [
   {
     accessorKey: 'name',
     header: () => <div className="text-left">Nome</div>,
