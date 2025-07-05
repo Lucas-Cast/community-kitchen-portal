@@ -3,8 +3,6 @@ import { toast } from 'sonner'
 import { Food } from '@/shared/types/food'
 import { foodService } from '@/shared/services/food/food'
 
-type FoodUpdatePayload = Omit<Food, 'id'>
-
 export function useUpdateFood(onSuccess?: () => void, onError?: (err: unknown) => void) {
   const [isUpdating, setIsUpdating] = useState(false)
 
