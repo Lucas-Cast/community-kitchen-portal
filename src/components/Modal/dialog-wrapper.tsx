@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from './dialog'
-import { Button } from './button'
+import { Button } from '../ui/button'
 import { ReactNode } from 'react'
 
 interface ModalWrapperProps {

@@ -10,9 +10,9 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/dialog'
+} from '@/components/Modal/dialog'
 import { Button } from '@/components/ui/button'
-import { ModalWrapper } from '../ui/dialog-wrapper'
+import { ModalWrapper } from '../Modal/modal-wrapper'
 
 export default function MenuTable() {
   const menusData = useMenus()
