@@ -4,4 +4,5 @@ export enum Routes {
   TOKEN_VALIDATE = '/auth/validate',
   USER_BY_ID = '/usuarios/',
   LIST_MENUS = '/menus',
+  LIST_DISHES = '/dishes',
 }

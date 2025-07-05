@@ -12,6 +12,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+
 import { ModalWrapper } from '../Modal/modal'
 
 export default function MenuTable() {
@@ -21,6 +22,7 @@ export default function MenuTable() {
 
   return (
   <div className="container mx-auto py-10 space-y-4">
+
     {/*Testando Modal*/}
         <>
       <Button onClick={() => setOpen(true)}>Abrir Modal de Teste</Button>
@@ -32,6 +34,7 @@ export default function MenuTable() {
           console.log('Salvar enviado!')
           setOpen(false)
         }}
+
         title="Modal de Teste"
         description="Preencha os campos abaixo"
         size="lg"

@@ -1,11 +1,13 @@
 'use client'
 
+import DishTable from '@/components/DishTable'
 import PageContainer from '@/components/PageContainer'
 
 export default function Page() {
+
   return (
     <PageContainer>
-      <div className="container mx-auto py-10">test</div>
+      <DishTable/>
     </PageContainer>
   )
 }
