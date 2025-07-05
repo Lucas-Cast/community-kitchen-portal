@@ -12,34 +12,6 @@ export default function MenuTable() {
 
   return (
     <div className="container mx-auto py-10 space-y-4">
-      {/* Testando Modal */}
-      <Button onClick={() => setOpen(true)}>Abrir Modal de Teste</Button>
-
-      <Modal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={() => {setOpen(false)}}
-        title="Modal de Exemplo"
-        description="Descrição do modal teste"
-        confirmText="Confirmar"
-        cancelText="Cancelar"
-        size="xl"
-        variant="default"
-        animation="slide-down"
-        position="center"
-      >
-        <form className="space-y-4">
-          <input
-            className="w-full border px-3 py-2 rounded"
-            placeholder="Campo de teste"
-          />
-          <input
-            className="w-full border px-3 py-2 rounded"
-            placeholder="Outro campo"
-          />
-        </form>
-
-      </Modal>
       <div className="container mx-auto py-10">
         <DataTable columns={columns} data={optimisticMenusData} />
       </div>
