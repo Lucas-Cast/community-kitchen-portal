@@ -5,4 +5,5 @@ export enum Routes {
   USER_BY_ID = '/usuarios/',
   LIST_MENUS = '/menus',
   LIST_DISHES = '/dishes',
+  LIST_FOODS = '/foods',
 }

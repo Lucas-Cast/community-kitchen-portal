@@ -8,8 +8,10 @@ export default function MenuTable() {
   const [optimisticMenusData] = useOptimistic(menusData.data || [])
 
   return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={optimisticMenusData} />
+    <div className="container mx-auto py-10 space-y-4">
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={optimisticMenusData} />
+      </div>
     </div>
   )
 }
