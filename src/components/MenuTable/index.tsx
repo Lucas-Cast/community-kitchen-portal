@@ -2,18 +2,9 @@ import { useMenus } from '@/shared/hooks/useMenus'
 import { DataTable } from '../DataTable'
 import { columns } from './columns'
 import { useOptimistic, useState } from 'react'
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 
-import { ModalWrapper } from '../Modal/modal'
+import { Modal } from '../Modal/modal'
 
 export default function MenuTable() {
   const menusData = useMenus()
@@ -27,7 +18,7 @@ export default function MenuTable() {
         <>
       <Button onClick={() => setOpen(true)}>Abrir Modal de Teste</Button>
 
-      <ModalWrapper
+      <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={() => {
@@ -50,7 +41,7 @@ export default function MenuTable() {
             placeholder="Outro campo"
           />
         </form>
-      </ModalWrapper>
+      </Modal>
     </>
 
     <div className="container mx-auto py-10">

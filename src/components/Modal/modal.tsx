@@ -34,7 +34,7 @@ const sizeClasses: Record<NonNullable<ModalWrapperProps['size']>, string> = {
   full: 'w-full h-full max-w-none',
 }
 
-export const ModalWrapper = ({
+export const Modal = ({
   isOpen,
   onClose,
   onConfirm,
