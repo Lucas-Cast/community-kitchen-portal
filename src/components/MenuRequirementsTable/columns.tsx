@@ -1,3 +1,7 @@
+'use client'
+
+import { ColumnDef } from '@tanstack/react-table'
+import { MenuRequirement } from '@/shared/types/menu-requirement'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -5,91 +9,106 @@ import {
   DropdownMenuLabel,
   DropdownMenuItem,
 } from '@radix-ui/react-dropdown-menu'
-import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
-import { Button } from '../ui/button'
-import { MenuRequirement } from '@/shared/types/menu-requirement'
+import { Button } from '@/components/ui/button'
+import { MoreHorizontal } from 'lucide-react'
+import { VerticalDataTable } from '../VerticalDataTable'
 
 export const columns: ColumnDef<MenuRequirement>[] = [
   {
     accessorKey: 'minCalories',
-    header: () => <div className="text-left">Calorias (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Calorias (kcal)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minCalories')}</div>,
   },
   {
     accessorKey: 'maxCalories',
-    header: () => <div className="text-left">Calorias (Max)</div>,
+    header: () => <div className="text-left">Máximo de Calorias (kcal)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxCalories')}</div>,
   },
   {
     accessorKey: 'minCarbohydrates',
-    header: () => <div className="text-left">Carboidratos (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Carboidratos (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minCarbohydrates')}</div>,
   },
   {
     accessorKey: 'maxCarbohydrates',
-    header: () => <div className="text-left">Carboidratos (Max)</div>,
+    header: () => <div className="text-left">Máximo de Carboidratos (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxCarbohydrates')}</div>,
   },
   {
     accessorKey: 'minProteins',
-    header: () => <div className="text-left">Proteínas (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Proteínas (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minProteins')}</div>,
   },
   {
     accessorKey: 'maxProteins',
-    header: () => <div className="text-left">Proteínas (Max)</div>,
+    header: () => <div className="text-left">Máximo de Proteínas (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxProteins')}</div>,
   },
   {
     accessorKey: 'minFats',
-    header: () => <div className="text-left">Gordura (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Gordura (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minFats')}</div>,
   },
   {
     accessorKey: 'maxFats',
-    header: () => <div className="text-left">Gordura (Max)</div>,
+    header: () => <div className="text-left">Máximo de Gordura (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxFats')}</div>,
   },
   {
     accessorKey: 'minFiber',
-    header: () => <div className="text-left">Fibra (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Fibra (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minFiber')}</div>,
   },
   {
     accessorKey: 'maxFiber',
-    header: () => <div className="text-left">Fibra (Max)</div>,
+    header: () => <div className="text-left">Máximo de Fibra (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxFiber')}</div>,
   },
   {
     accessorKey: 'minSugar',
-    header: () => <div className="text-left">Açucar (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Açucar (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minSugar')}</div>,
   },
   {
     accessorKey: 'maxSugar',
-    header: () => <div className="text-left">Açucar (Max)</div>,
+    header: () => <div className="text-left">Máximo de Açucar (g)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxSugar')}</div>,
   },
   {
     accessorKey: 'minSodium',
-    header: () => <div className="text-left">Sódio (Mín)</div>,
+    header: () => <div className="text-left">Mínimo de Sódio (mg)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('minSodium')}</div>,
   },
   {
     accessorKey: 'maxSodium',
-    header: () => <div className="text-left">Sódio (Max)</div>,
+    header: () => <div className="text-left">Máximo de Sódio (mg)</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('maxSodium')}</div>,
   },
   {
     accessorKey: 'isActive',
-    header: 'Ativo?',
+    header: 'Status',
     cell: ({ row }) => (
       <div className="text-left">
-        {row.getValue('isActive') ? '✅ Sim' : '❌ Não'}
+        {row.getValue('isActive') ? '✅ Ativado' : '❌ Desativado'}
       </div>
     ),
   },
+  {
+    accessorKey: 'createdAt',
+    header: () => <div className="text-left">Data de criação</div>,
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('createdAt')).toLocaleDateString()
+      return <div className="text-left">{date}</div>
+    },
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: () => <div className="text-left">Data de alteração</div>,
+    cell: ({ row }) => {
+        const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
+        return <div className="text-left">{date}</div>
+    },
+   },
   {
     id: 'actions',
     enableHiding: false,
@@ -115,18 +134,15 @@ export const columns: ColumnDef<MenuRequirement>[] = [
               <DropdownMenuLabel className="text-gray-200 font-semibold px-3 py-2 text-sm">
                 ⚙️ Ações
               </DropdownMenuLabel>
-
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(requirement.id.toString())}
                 className="text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer px-3 py-2 transition-all duration-150 rounded-sm mx-1"
               >
                 <span className="flex items-center gap-2">📋 Copiar ID</span>
               </DropdownMenuItem>
-
               <DropdownMenuItem className="text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer px-3 py-2 transition-all duration-150 rounded-sm mx-1">
                 <span className="flex items-center gap-2">🖉 Editar</span>
               </DropdownMenuItem>
-
               <DropdownMenuItem className="text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer px-3 py-2 transition-all duration-150 rounded-sm mx-1">
                 <span className="flex items-center gap-2">🗑️ Deletar</span>
               </DropdownMenuItem>
@@ -137,3 +153,17 @@ export const columns: ColumnDef<MenuRequirement>[] = [
     },
   },
 ]
+
+interface MenuRequirementTableProps {
+  data: MenuRequirement[]
+}
+
+export function MenuRequirementTable({ data }: MenuRequirementTableProps) {
+  return (
+    <VerticalDataTable
+      columns={columns}
+      data={data}
+      title={(row: MenuRequirement) => `Requisito #${row.id}`}
+    />
+  )
+}

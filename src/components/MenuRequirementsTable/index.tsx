@@ -1,7 +1,9 @@
 import { useActiveMenuRequirements } from '@/shared/hooks/useActiveMenuRequirements'
-import { DataTable } from '../DataTable'
 import { columns } from './columns'
 import { useOptimistic } from 'react'
+import { VerticalDataTable } from '../VerticalDataTable'
+import { MenuRequirement } from '@/shared/types/menu-requirement'
+import { menuRequirementService } from '@/shared/services/menuRequirement/menuRequirement'
 
 export default function ActiveMenuRequirementTable() {
   const { data, isLoading, error } = useActiveMenuRequirements()
@@ -13,8 +15,10 @@ export default function ActiveMenuRequirementTable() {
       {isLoading && <p className="text-gray-500">Carregando requisitos...</p>}
 
       {!isLoading && !error && (
-        <DataTable columns={columns} data={optimisticData} />
+        <VerticalDataTable columns={columns} data={optimisticData} title={(row: MenuRequirement) => `Requisitos do Menu - ${row.id}`}/>
       )}
+
+      
     </div>
   )
 }
