@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { getColumns } from './columns'
 import { Food } from '@/shared/types/food'
 import { useFoods } from '@/shared/hooks/foods/useFoods'
-import FoodCreateButton from '../FoodCreateButton'
+import FoodCreateButton from './FoodCreateButton'
 
 export default function FoodTable() {
   const foodData = useFoods()

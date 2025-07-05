@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { Food } from '@/shared/types/food'
-import CreateFoodForm from '../FoodCreateForm'
 import { Modal } from '../Modal'
+import CreateFoodForm from './FoodCreateForm'
 
 export default function FoodCreateButton({ onCreate }: { onCreate: (food: Food) => void }) {
   const [open, setOpen] = useState(false)
