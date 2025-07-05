@@ -1,6 +1,5 @@
 import { createAxiosClient } from '@/shared/factories/axios-client'
 import { environment } from '@/environment'
-import { Menu, WeeklyMenuResponse } from '@/shared/types/menu'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
 import { MenuRequirement } from '@/shared/types/menu-requirement'

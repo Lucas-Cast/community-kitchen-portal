@@ -3,7 +3,6 @@ import { columns } from './columns'
 import { useOptimistic } from 'react'
 import { VerticalDataTable } from '../VerticalDataTable'
 import { MenuRequirement } from '@/shared/types/menu-requirement'
-import { menuRequirementService } from '@/shared/services/menuRequirement/menuRequirement'
 
 export default function ActiveMenuRequirementTable() {
   const { data, isLoading, error } = useActiveMenuRequirements()
