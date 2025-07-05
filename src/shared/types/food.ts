@@ -4,5 +4,4 @@ export interface Food {
   id: number
   name: string
   nutritionFacts: NutritionFacts
-  quantity: number // em gramas
 }

@@ -18,16 +18,18 @@ type ActionsColumnProps<T> = {
   rowData: T
   deleteUrl?: (data: T) => string
   onDelete?: (data: T) => void
+  onEdit?: (updatedData: T) => void
   label?: string
 
   editUrl?: (data: T) => string
-  EditForm?: React.ComponentType<{ data: T; onSuccess: () => void }>
+  EditForm?: React.ComponentType<{ data: T; onSuccess: (updatedData: T) => void }>
 }
 
 export function ActionsColumn<T>({
   rowData,
   deleteUrl,
   onDelete,
+  onEdit,
   label = '⚙️ Ações',
   editUrl,
   EditForm,
@@ -131,9 +133,10 @@ export function ActionsColumn<T>({
           {editData ? (
             <EditForm
               data={editData}
-              onSuccess={() => {
+              onSuccess={updatedData => {
                 setEditModalOpen(false)
                 setEditData(null)
+                onEdit?.(updatedData)
               }}
             />
           ) : (

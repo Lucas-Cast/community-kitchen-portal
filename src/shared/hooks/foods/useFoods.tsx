@@ -1,6 +1,6 @@
+import { foodService } from '@/shared/services/food/food'
+import { Food } from '@/shared/types/food'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { foodService } from '../services/food/food'
-import { Food } from '../types/food'
 
 export function useFoods() {
   const [foodData, setFoodData] = useState<{
@@ -39,7 +39,7 @@ export function useFoods() {
 
   return useMemo(() => {
     return {
-      ...foodData
+      ...foodData,
     }
   }, [foodData, fetchFoods])
 }

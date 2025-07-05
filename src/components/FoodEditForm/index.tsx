@@ -1,20 +1,19 @@
 'use client'
 
 import { useState } from 'react'
-import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
 import { NutritionFacts } from '@/shared/types/nutrition-facts'
 import { Food } from '@/shared/types/food'
+import { useUpdateFood } from '@/shared/hooks/foods/useUpdateFoods'
 
 type FoodEditFormProps = {
   data: Food
-  onSuccess: () => void
+  onSuccess: (updatedData: Food) => void
 }
 
 export function FoodEditForm({ data, onSuccess }: FoodEditFormProps) {
   const [name, setName] = useState(data.name)
   const [nutritionFacts, setNutritionFacts] = useState<NutritionFacts>(data.nutritionFacts)
-  const [loading, setLoading] = useState(false)
+  const { updateFood, isUpdating } = useUpdateFood()
 
   function handleChange(field: keyof NutritionFacts, value: string) {
     setNutritionFacts(prev => ({
@@ -22,8 +21,11 @@ export function FoodEditForm({ data, onSuccess }: FoodEditFormProps) {
       [field]: parseFloat(value),
     }))
   }
-  function handleSubmit() {
-    console.log('submit')
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+
+    const updatedFood = await updateFood(data, { name, nutritionFacts })
+    onSuccess(updatedFood)
   }
 
   return (
@@ -49,6 +51,7 @@ export function FoodEditForm({ data, onSuccess }: FoodEditFormProps) {
             onChange={e => handleChange(key as keyof NutritionFacts, e.target.value)}
             step="any"
             required
+            disabled={key === 'calories'}
           />
         </div>
       ))}

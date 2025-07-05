@@ -20,6 +20,10 @@ class FoodService {
         throw err
       })
   }
+  async update(id: number, payload: Partial<Food>): Promise<Food> {
+    const response = await this.client.put<Food>(`/foods/${id}`, payload)
+    return response.data
+  }
 }
 
 export const foodService = new FoodService()

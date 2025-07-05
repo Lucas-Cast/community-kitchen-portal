@@ -3,7 +3,10 @@ import { Food } from '@/shared/types/food'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
 import { FoodEditForm } from '../FoodEditForm'
 
-export const getColumns = (onDelete: (food: Food) => void): ColumnDef<Food>[] => [
+export const getColumns = (
+  onDelete: (food: Food) => void,
+  onEdit: (food: Food) => void
+): ColumnDef<Food>[] => [
   {
     accessorKey: 'name',
     header: () => <div className="text-left">Nome</div>,
@@ -82,6 +85,7 @@ export const getColumns = (onDelete: (food: Food) => void): ColumnDef<Food>[] =>
         onDelete={onDelete}
         editUrl={data => `/foods/${data.id}`}
         EditForm={FoodEditForm}
+        onEdit={onEdit}
       />
     ),
   },
