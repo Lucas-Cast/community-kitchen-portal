@@ -20,6 +20,11 @@ class CustomerService {
         throw err
       })
   }
+
+  async create(customer: Partial<Customer>): Promise<Customer> {
+    const response = await this.client.post<Customer>('/customers', customer)
+    return response.data
+  }
 }
 
 export const customerService = new CustomerService()

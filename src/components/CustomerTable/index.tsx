@@ -3,6 +3,7 @@ import { Customer } from '@/shared/types/customer'
 import { useEffect, useState } from 'react'
 import { DataTable } from '../DataTable'
 import { getColumns } from './columns'
+import CustomerCreateButton from './CustomerCreateButton'
 
 export default function CustomerTable() {
   const customerData = useCustomer()
@@ -25,6 +26,9 @@ export default function CustomerTable() {
   const columns = getColumns(handleDelete, handleEdit)
   return (
     <div className="container mx-auto py-10">
+      <div className="flex justify-end mb-4">
+        <CustomerCreateButton onCreate={handleCreate} />
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   )

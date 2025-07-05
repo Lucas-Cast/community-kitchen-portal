@@ -1,7 +1,5 @@
 import { customerService } from '@/shared/services/customer/customer'
-import { foodService } from '@/shared/services/food/food'
 import { Customer } from '@/shared/types/customer'
-import { Food } from '@/shared/types/food'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export function useCustomer() {
