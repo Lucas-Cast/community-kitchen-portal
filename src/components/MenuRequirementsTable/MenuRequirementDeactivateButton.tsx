@@ -30,7 +30,7 @@ export default function MenuRequirementDeactivateButton({ onDeactivate }: Props)
   return (
     <>
       <Button onClick={() => setOpen(true)} className="bg-red-600 hover:bg-red-700 text-white">
-        🚫 Desativar Menu
+        🚫 Desativar Requisito
       </Button>
 
       <Modal

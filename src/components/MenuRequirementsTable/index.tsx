@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { MenuRequirementEditForm } from './MenuRequirementEditForm'
 import MenuRequirementDeactivateButton from './MenuRequirementDeactivateButton'
 import { useMenuRequirements } from '@/shared/hooks/menuRequirements/useMenuRequirements'
+import { useDeleteMenuRequirement } from '@/shared/hooks/menuRequirements/useDeleteMenuRequirement'
 
 
 export default function MenuRequirementTable() {
@@ -24,8 +25,16 @@ export default function MenuRequirementTable() {
     setLocalData(prev => [...prev, newMenuRequirement])
   }
 
-  function handleDelete(menuRequirementToDelete: MenuRequirement) {
+  const { deleteMenuRequirement } = useDeleteMenuRequirement()
+
+  async function handleDelete(menuRequirementToDelete: MenuRequirement) {
+  try {
+    await deleteMenuRequirement(menuRequirementToDelete.id)
     setLocalData(prev => prev.filter(mr => mr.id !== menuRequirementToDelete.id))
+  } catch (error) {
+
+    console.error('Erro ao deletar menu requirement:', error)
+  }
   }
 
   function handleEdit(menuRequirementToEdit: MenuRequirement) {
