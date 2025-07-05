@@ -41,5 +41,5 @@ export function useFoods() {
     return {
       ...foodData,
     }
-  }, [foodData, fetchFoods])
+  }, [foodData])
 }

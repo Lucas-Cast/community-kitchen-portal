@@ -8,11 +8,7 @@ type UseDeleteResourceOptions<T> = {
   onError?: (err: unknown) => void
 }
 
-export function useDeleteResource<T>({
-  getUrl,
-  onSuccess,
-  onError,
-}: UseDeleteResourceOptions<T>) {
+export function useDeleteResource<T>({ getUrl, onSuccess, onError }: UseDeleteResourceOptions<T>) {
   const [isDeleting, setIsDeleting] = useState(false)
 
   const deleteItem = useCallback(
@@ -23,9 +19,9 @@ export function useDeleteResource<T>({
         await resourceService.delete(url)
         toast.success('Item deletado com sucesso!')
         onSuccess?.()
-      } catch (err: any) {
+      } catch (err) {
+        console.log(err)
         toast.error('Erro ao deletar item.')
-        onError?.(err)
       } finally {
         setIsDeleting(false)
       }
@@ -33,8 +29,5 @@ export function useDeleteResource<T>({
     [getUrl, onSuccess, onError]
   )
 
-  return useMemo(
-    () => ({ deleteItem, isDeleting }),
-    [deleteItem, isDeleting]
-  )
+  return useMemo(() => ({ deleteItem, isDeleting }), [deleteItem, isDeleting])
 }

@@ -24,6 +24,11 @@ class FoodService {
     const response = await this.client.put<Food>(`/foods/${id}`, payload)
     return response.data
   }
+
+  async create(food: Partial<Food>): Promise<Food> {
+    const response = await this.client.post<Food>('/foods', food)
+    return response.data
+  }
 }
 
 export const foodService = new FoodService()

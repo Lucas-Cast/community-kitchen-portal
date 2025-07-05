@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Food } from '@/shared/types/food'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
-import { FoodEditForm } from '../FoodEditForm'
+import { FoodEditForm } from './FoodEditForm'
 
 export const getColumns = (
   onDelete: (food: Food) => void,

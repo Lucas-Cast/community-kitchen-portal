@@ -35,6 +35,11 @@ const items = [
         url: '#',
         icon: UtensilsCrossed,
       },
+      {
+        title: 'Especificações Menu',
+        url: '/menu-requirements',
+        icon: Settings,
+      },
     ],
   },
   {

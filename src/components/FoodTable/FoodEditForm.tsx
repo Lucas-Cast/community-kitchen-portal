@@ -13,7 +13,7 @@ type FoodEditFormProps = {
 export function FoodEditForm({ data, onSuccess }: FoodEditFormProps) {
   const [name, setName] = useState(data.name)
   const [nutritionFacts, setNutritionFacts] = useState<NutritionFacts>(data.nutritionFacts)
-  const { updateFood, isUpdating } = useUpdateFood()
+  const { updateFood } = useUpdateFood()
 
   function handleChange(field: keyof NutritionFacts, value: string) {
     setNutritionFacts(prev => ({
