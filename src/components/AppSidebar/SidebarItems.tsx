@@ -3,7 +3,7 @@ import {
   Calendar,
   ChevronDown,
   Home,
-  Inbox,
+  Utensils,
   Pizza,
   Search,
   Settings,
@@ -29,7 +29,7 @@ const items = [
   {
     title: 'Pratos',
     url: '/dishes',
-    icon: Inbox,
+    icon: Utensils,
   },
   {
     title: 'Menu',
