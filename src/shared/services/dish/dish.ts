@@ -23,9 +23,14 @@ class DishService {
   }
 
   async update(id: number, payload: UpdateDishPayload): Promise<Dish> {
-    const response = await this.client.put<Dish>(`/dishes/${id}`, payload)
-  return response.data
-}
+    return await this.client
+      .put<Dish>(`${Routes.LIST_DISHES}/${id}`, payload)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error updating dish:', err)
+        throw err
+      })
+  }
 }
 
 export const dishService = new DishService()
