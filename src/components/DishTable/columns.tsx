@@ -12,10 +12,7 @@ export const getColumns = (
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
+      <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
         Nome <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
@@ -24,14 +21,16 @@ export const getColumns = (
   {
     accessorKey: 'description',
     header: () => <div className="text-left">Descrição</div>,
-    cell: ({ row }) => <div className="text-left">{row.getValue('description')}</div>,
+    cell: ({ row }) => (
+      <div className="text-left max-w-[300px] truncate">{row.getValue('description')}</div>
+    ),
   },
   {
     accessorKey: 'foods',
     header: () => <div className="text-left">Ingredientes</div>,
     cell: ({ row }) => {
       const foods = row.original.foods.map(food => food.name)
-      return <div className="text-left">{foods.join(', ')}</div>
+      return <div className="text-left max-w-[300px] truncate">{foods.join(', ')}</div>
     },
   },
   {
@@ -43,29 +42,27 @@ export const getColumns = (
     },
   },
 
-    {
+  {
     accessorKey: 'updatedAt',
     header: () => <div className="text-left">Atualizado em</div>,
     cell: ({ row }) => {
-        const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
-        return <div className="text-left">{date}</div>
+      const date = new Date(row.getValue('updatedAt')).toLocaleDateString()
+      return <div className="text-left">{date}</div>
     },
-    },
+  },
 
   {
-      id: 'actions',
-      header: () => <div className="text-left">Ações</div>,
-      cell: ({ row }) => (
-        <ActionsColumn
-          rowData={row.original}
-          deleteUrl={data => `/dishes/${data.id}`}
-          onDelete={onDelete}
-          editUrl={data => `/dishes/${data.id}`}
-          EditForm={DishEditForm}
-          onEdit={onEdit}
-        />
-      ),
-    },
-
+    id: 'actions',
+    header: () => <div className="text-left">Ações</div>,
+    cell: ({ row }) => (
+      <ActionsColumn
+        rowData={row.original}
+        deleteUrl={data => `/dishes/${data.id}`}
+        onDelete={onDelete}
+        editUrl={data => `/dishes/${data.id}`}
+        EditForm={DishEditForm}
+        onEdit={onEdit}
+      />
+    ),
+  },
 ]
-

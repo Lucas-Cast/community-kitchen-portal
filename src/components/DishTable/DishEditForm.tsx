@@ -5,6 +5,7 @@ import { Dish } from '@/shared/types/dish'
 import { useUpdateDishes } from '@/shared/hooks/dishes/useUpdateDishes'
 import { Ingredient } from './Ingredient'
 import { useFoods } from '@/shared/hooks/foods/useFoods'
+import { Button } from '../ui/button'
 
 type DishEditFormProps = {
   data: Dish
@@ -12,14 +13,17 @@ type DishEditFormProps = {
 }
 
 export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
+  const MAX_INGREDIENTS = 50
+
   const [name, setName] = useState(data.name)
   const [description, setDescription] = useState(data.description)
+
   const [foods, setFoods] = useState(
     data.foods.map(f => ({ foodId: f.id, name: f.name, quantity: f.quantity }))
   )
+  const [newFoods, setNewFoods] = useState<{ name: string; quantity: string }[]>([])
 
   const { data: allFoods = [] } = useFoods()
-
   const { updateDish, isUpdating } = useUpdateDishes()
 
   function handleFoodChange(index: number, selectedName: string) {
@@ -35,20 +39,46 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
     }
     setFoods(updatedFoods)
   }
-
   function handleQuantityChange(index: number, value: string) {
     const updatedFoods = [...foods]
     updatedFoods[index].quantity = parseFloat(value)
     setFoods(updatedFoods)
   }
 
+  function handleAddFood() {
+    const totalIngredients = foods.length + newFoods.length
+    if (totalIngredients >= MAX_INGREDIENTS) return
+    setNewFoods([...newFoods, { name: '', quantity: '' }])
+  }
+  function handleNewFoodChange(index: number, selectedName: string) {
+    const updatedNewFoods = [...newFoods]
+    updatedNewFoods[index].name = selectedName
+    setNewFoods(updatedNewFoods)
+  }
+  function handleNewQuantityChange(index: number, value: string) {
+    const updatedNewFoods = [...newFoods]
+    updatedNewFoods[index].quantity = value
+    setNewFoods(updatedNewFoods)
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    const newValidFoods = newFoods
+      .filter(f => f.name && f.quantity)
+      .map(f => {
+        const ingredient = allFoods.find(ing => ing.name === f.name)
+        if (!ingredient) throw new Error(`Ingrediente inválido: ${f.name}`)
+        return {
+          foodId: ingredient.id,
+          quantity: parseFloat(f.quantity),
+        }
+      })
 
     const payload = {
       name,
       description,
-      foods: foods.map(f => ({ foodId: f.foodId, quantity: f.quantity })),
+      foods: [...foods.map(f => ({ foodId: f.foodId, quantity: f.quantity })), ...newValidFoods],
     }
 
     const updatedDish = await updateDish(data, payload)
@@ -87,11 +117,20 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
         />
       ))}
 
-      {/* Teste */}
-      {/*       <Ingredient
-        onQuantityChange={value => console.log('Nova quantidade:', value)}
-        onFoodChange={value => console.log('Novo ingrediente:', value)}
-      /> */}
+      {newFoods.map((newFood, index) => (
+        <Ingredient
+          key={`new-food-${index}`}
+          food={newFood}
+          onQuantityChange={value => handleNewQuantityChange(index, value)}
+          onFoodChange={value => handleNewFoodChange(index, value)}
+        />
+      ))}
+
+      {foods.length + newFoods.length < MAX_INGREDIENTS && (
+        <Button type="button" onClick={handleAddFood} variant="default">
+          Adicionar ingrediente
+        </Button>
+      )}
     </form>
   )
 }

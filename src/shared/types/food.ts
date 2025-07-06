@@ -6,3 +6,9 @@ export interface Food {
   name: string
   nutritionFacts: NutritionFacts
 }
+
+export interface SimplifiedFood {
+  foodId?: number
+  name: string
+  quantity: number | string
+}

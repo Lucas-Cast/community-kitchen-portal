@@ -1,12 +1,6 @@
 import { useFoods } from '@/shared/hooks/foods/useFoods'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
-import { Food } from '@/shared/types/food'
-
-type SimplifiedFood = {
-  foodId: number
-  name: string
-  quantity: number
-}
+import { Food, SimplifiedFood } from '@/shared/types/food'
 
 type IngredientProps = {
   food?: SimplifiedFood
@@ -26,7 +20,6 @@ export function Ingredient({ food, onQuantityChange, onFoodChange }: IngredientP
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Selecione um ingrediente" />
           </SelectTrigger>
-
           <SelectContent>
             {ingredients?.map(ingredient => (
               <SelectItem value={ingredient.name} key={ingredient.id}>
