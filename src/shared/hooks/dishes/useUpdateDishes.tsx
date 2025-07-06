@@ -11,7 +11,7 @@ export function useUpdateDishes(onSuccess?: () => void, onError?: (err: unknown)
     async (dish: Dish, payload: DishPayload) => {
       try {
         setIsUpdating(true)
-        const updated = await dishService.update(dish.id, payload)
+        const updated = await dishService.updateDish(dish.id, payload)
         toast.success('Prato atualizado com sucesso!')
         onSuccess?.()
         return updated

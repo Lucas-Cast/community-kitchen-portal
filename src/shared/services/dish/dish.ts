@@ -22,12 +22,22 @@ class DishService {
       })
   }
 
-  async update(id: number, payload: DishPayload): Promise<Dish> {
+  async updateDish(id: number, payload: DishPayload): Promise<Dish> {
     return await this.client
       .put<Dish>(`${Routes.LIST_DISHES}/${id}`, payload)
       .then(res => res.data)
       .catch(err => {
         console.error('Error updating dish:', err)
+        throw err
+      })
+  }
+
+  async createDish(payload: DishPayload): Promise<Dish> {
+    return await this.client
+      .post<Dish>(Routes.LIST_DISHES, payload)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error creating dish:', err)
         throw err
       })
   }
