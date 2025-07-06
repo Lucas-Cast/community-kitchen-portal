@@ -61,6 +61,17 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
     setNewFoods(updatedNewFoods)
   }
 
+  function handleRemoveFood(index: number) {
+    const updatedFoods = [...foods]
+    updatedFoods.splice(index, 1)
+    setFoods(updatedFoods)
+  }
+  function handleRemoveNewFood(index: number) {
+    const updatedNewFoods = [...newFoods]
+    updatedNewFoods.splice(index, 1)
+    setNewFoods(updatedNewFoods)
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
@@ -114,6 +125,7 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
           food={food}
           onQuantityChange={value => handleQuantityChange(index, value)}
           onFoodChange={value => handleFoodChange(index, value)}
+          onRemove={() => handleRemoveFood(index)}
         />
       ))}
 
@@ -123,6 +135,7 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
           food={newFood}
           onQuantityChange={value => handleNewQuantityChange(index, value)}
           onFoodChange={value => handleNewFoodChange(index, value)}
+          onRemove={() => handleRemoveNewFood(index)}
         />
       ))}
 
