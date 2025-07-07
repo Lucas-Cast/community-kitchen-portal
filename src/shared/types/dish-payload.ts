@@ -1,4 +1,4 @@
-export interface UpdateDishPayload {
+export interface DishPayload {
   name: string
   description: string
   foods: {

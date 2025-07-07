@@ -1,5 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Dish } from '@/shared/types/dish'
+import { Routes } from '@/shared/enums/routes'
 import { Button } from '../ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
@@ -57,9 +58,9 @@ export const getColumns = (
     cell: ({ row }) => (
       <ActionsColumn
         rowData={row.original}
-        deleteUrl={data => `/dishes/${data.id}`}
+        deleteUrl={data => `${Routes.LIST_DISHES}/${data.id}`}
         onDelete={onDelete}
-        editUrl={data => `/dishes/${data.id}`}
+        editUrl={data => `${Routes.LIST_DISHES}/${data.id}`}
         EditForm={DishEditForm}
         onEdit={onEdit}
       />
