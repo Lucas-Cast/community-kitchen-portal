@@ -3,12 +3,11 @@ import { getColumns } from './columns'
 import { VerticalDataTable } from '../VerticalDataTable'
 import { MenuRequirement } from '@/shared/types/menu-requirement'
 import CreateMenuRequirementButton from './MenuRequirementCreateButton'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { MenuRequirementEditForm } from './MenuRequirementEditForm'
 import MenuRequirementDeactivateButton from './MenuRequirementDeactivateButton'
 import { useMenuRequirements } from '@/shared/hooks/menuRequirements/useMenuRequirements'
-import { useDeleteMenuRequirement } from '@/shared/hooks/menuRequirements/useDeleteMenuRequirement'
 import { useDeactivateMenuRequirement } from '@/shared/hooks/menuRequirements/useDeactivateMenuRequirement'
+import { AxiosError } from 'axios'
+import { toast } from 'sonner'
 
 
 export default function MenuRequirementTable() {
@@ -16,7 +15,6 @@ export default function MenuRequirementTable() {
   const [localData, setLocalData] = useState<MenuRequirement[]>(data || [])
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [selectedMenuRequirement, setSelectedMenuRequirement] = useState<MenuRequirement | null>(null)
-  const { deleteMenuRequirement } = useDeleteMenuRequirement()
   const { deactivate } = useDeactivateMenuRequirement()
 
   useEffect(() => {
@@ -29,11 +27,15 @@ export default function MenuRequirementTable() {
 
   async function handleDelete(menuRequirementToDelete: MenuRequirement) {
     try {
-      await deleteMenuRequirement(menuRequirementToDelete.id)
       setLocalData(prev => prev.filter(mr => mr.id !== menuRequirementToDelete.id))
     } catch (error) {
-
       console.error('Erro ao deletar menu requirement:', error)
+      const axiosError = error as AxiosError
+      if (axiosError?.response?.status === 400) {
+        toast.error('Não é possível remover: o requisito ainda está ativo.')
+      } else {
+        toast.error('Erro ao remover o requisito.')
+      }
     }
   }
 
@@ -50,12 +52,7 @@ export default function MenuRequirementTable() {
     }
   }
 
-  function handleEdit(menuRequirementToEdit: MenuRequirement) {
-    setSelectedMenuRequirement(menuRequirementToEdit)
-    setEditModalOpen(true)
-  }
-
-  function handleEditSuccess(updatedMenuRequirement: MenuRequirement) {
+  function handleEdit(updatedMenuRequirement: MenuRequirement) {
     setLocalData(prev =>
       prev.map(mr => (mr.id === updatedMenuRequirement.id ? updatedMenuRequirement : mr))
     )
@@ -79,17 +76,6 @@ export default function MenuRequirementTable() {
         data={localData}
         title={(row: MenuRequirement) => `Requisitos do Menu - ${row.id}`}
       />
-      <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
-        <DialogContent className="max-h-[80vh] overflow-y-auto p-6 bg-white rounded-lg shadow-lg max-w-md w-full">
-          <DialogTitle className="text-lg font-semibold mb-4">Editar Requisito</DialogTitle>
-          {selectedMenuRequirement && (
-            <MenuRequirementEditForm
-              data={selectedMenuRequirement}
-              onSuccess={handleEditSuccess}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
