@@ -52,6 +52,11 @@ const items = [
       },
     ],
   },
+    {
+    title: 'Eventos Diários',
+    url: '/daily-events',
+    icon: Calendar,
+  },
   {
     title: 'Search',
     url: '#',

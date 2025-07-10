@@ -8,5 +8,6 @@ export enum Routes {
   LIST_ACTIVE_MENU_REQUIREMENTS = '/menu-requirements/get-active-menu-requirements',
   LIST_MENU_REQUIREMENTS = '/menu-requirements',
   LIST_FOODS = '/foods',
-  LIST_CUSTOMERS = '/customers'
+  LIST_CUSTOMERS = '/customers',
+  LIST_DAILY_EVENTS = '/daily-events'
 }

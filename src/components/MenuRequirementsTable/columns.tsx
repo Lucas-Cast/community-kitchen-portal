@@ -2,15 +2,6 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { MenuRequirement } from '@/shared/types/menu-requirement'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu'
-import { Button } from '@/components/ui/button'
-import { MoreHorizontal } from 'lucide-react'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
 import { Routes } from '@/shared/enums/routes'
 import { MenuRequirementEditForm } from './MenuRequirementEditForm'
