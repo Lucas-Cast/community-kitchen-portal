@@ -50,7 +50,7 @@ class DishService {
     proteins?: number
     limit?: number
     offset?: number
-  }): Promise<DishNutritionSummary[]> {
+  }): Promise<Dish[]> {
     const params = new URLSearchParams()
     if (filters.carbohydrates !== undefined)
       params.append('carbohydrates', filters.carbohydrates.toString())
@@ -61,7 +61,7 @@ class DishService {
     if (filters.offset !== undefined) params.append('offset', filters.offset.toString())
 
     return this.client
-      .get<DishNutritionSummary[]>(`/dishes/filtered/by-parameter?${params.toString()}`)
+      .get<Dish[]>(`/dishes/filtered/by-parameter?${params.toString()}`)
       .then(res => res.data)
       .catch(err => {
         console.error('Error fetching filtered dishes:', err)

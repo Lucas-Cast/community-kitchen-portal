@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
-import { DishNutritionSummary } from '@/shared/types/dish-nutrition-summary'
+import { Dish } from '@/shared/types/dish'
 
 export function useFilteredDishes() {
-  const [data, setData] = useState<DishNutritionSummary[] | null>(null)
+  const [data, setData] = useState<Dish[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -15,7 +15,7 @@ export function useFilteredDishes() {
       proteins?: number
       limit?: number
       offset?: number
-    }): Promise<DishNutritionSummary[]> => {
+    }): Promise<Dish[]> => {
       setLoading(true)
       setError(null)
       try {
