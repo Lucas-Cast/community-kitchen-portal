@@ -3,6 +3,7 @@ import { environment } from '@/environment'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
 import { DailyEvent } from '@/shared/types/daily-event'
+import { DailyEventPayload } from '@/shared/types/daily-event-payload'
 
 class DailyEventService {
   private readonly client: AxiosInstance
@@ -39,7 +40,17 @@ class DailyEventService {
       console.error('Erro ao buscar evento diário por ID:', err)
       throw err
     })
-}
+  }
+
+  async updateDailyEvent(id: number, payload: DailyEventPayload): Promise<DailyEvent> {
+    return await this.client
+      .put<DailyEvent>(`${Routes.LIST_DAILY_EVENTS}/${id}`, payload)
+      .then(res => res.data)
+      .catch(err => {
+        console.error(`Error updating daily event ${id}:`, err)
+        throw err
+      })
+  }
 
 }
 

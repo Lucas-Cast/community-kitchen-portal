@@ -4,6 +4,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { DailyEvent } from '@/shared/types/daily-event'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
 import { Routes } from '@/shared/enums/routes'
+import DailyEventEditForm from './DailyEventEditForm'
 
 export const getColumns = (
   onDelete: (dailyEvent: DailyEvent) => void,
@@ -30,9 +31,16 @@ export const getColumns = (
     cell: ({ row }) => <div className="text-left">{row.getValue('endTime')}</div>,
   },
   {
-    accessorKey: 'requirement.id',
-    header: () => <div className="text-left">Id - Requisito Nutricional</div>,
-    cell: ({ row }) => <div className="text-left">{row.original.requirement.id}</div>,
+  id: 'requirementId',
+  header: () => <div className="text-left">ID - Requisito Nutricional</div>,
+  cell: ({ row }) => {
+    const requirement = row.original.requirement
+    return (
+      <div className="text-left">
+        {requirement ? requirement.id : 'N/A'}
+      </div>
+      )
+    },
   },
   {
     id: 'actions',
@@ -43,6 +51,7 @@ export const getColumns = (
         deleteUrl={data => `${Routes.LIST_DAILY_EVENTS}/${data.id}`}
         onDelete={onDelete}
         editUrl={data => `${Routes.LIST_DAILY_EVENTS}/${data.id}`}
+        EditForm={DailyEventEditForm}
         onEdit={onEdit}
       />
     ),
