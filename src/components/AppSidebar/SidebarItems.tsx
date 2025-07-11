@@ -9,6 +9,8 @@ import {
   Settings,
   Users,
   UtensilsCrossed,
+  ClipboardList,
+  Clock
 } from 'lucide-react'
 import {
   SidebarMenuItem,
@@ -48,14 +50,14 @@ const items = [
       {
         title: 'Especificações Menu',
         url: '/menu-requirements',
-        icon: Settings,
+        icon: ClipboardList,
       },
     ],
   },
     {
     title: 'Eventos Diários',
     url: '/daily-events',
-    icon: Calendar,
+    icon: Clock,
   },
   {
     title: 'Search',

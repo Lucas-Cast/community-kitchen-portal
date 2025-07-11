@@ -20,6 +20,27 @@ class DailyEventService {
         throw err
       })
   }
+
+  async createDailyEvent(dailyEvent: Partial<DailyEvent>): Promise<DailyEvent> {
+    return await this.client
+      .post<DailyEvent>(Routes.LIST_DAILY_EVENTS, dailyEvent)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error creating daily event:', err)
+        throw err
+      })
+  }
+
+  async getDailyEventById(id: number): Promise<DailyEvent> {
+  return await this.client
+    .get<DailyEvent>(`${Routes.LIST_DAILY_EVENTS}/${id}`)
+    .then(res => res.data)
+    .catch(err => {
+      console.error('Erro ao buscar evento diário por ID:', err)
+      throw err
+    })
+}
+
 }
 
 export const dailyEventService = new DailyEventService()
