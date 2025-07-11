@@ -46,7 +46,7 @@ export function MenuRequirementEditForm({ data, onSuccess }: MenuRequirementEdit
   }
 
   return (
-    <form className="space-y-4" id="edit-menu-requirement-form" onSubmit={handleSubmit}>
+    <form className="space-y-4" id="edit-form" onSubmit={handleSubmit}>
       {(
         [
           ['Calorias', 'Calories'],
@@ -79,15 +79,6 @@ export function MenuRequirementEditForm({ data, onSuccess }: MenuRequirementEdit
           />
         </div>
       ))}
-
-      <div className="pt-2 flex justify-end">
-        <button
-          type="submit"
-          className="bg-black text-white rounded px-4 py-2 hover:bg-gray-800 transition-all"
-        >
-          Salvar
-        </button>
-      </div>
     </form>
   )
 }

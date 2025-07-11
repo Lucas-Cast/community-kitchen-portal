@@ -6,9 +6,10 @@ import {
   Utensils,
   Pizza,
   Search,
-  Settings,
   Users,
   UtensilsCrossed,
+  ClipboardList,
+  Clock
 } from 'lucide-react'
 import {
   SidebarMenuItem,
@@ -48,9 +49,14 @@ const items = [
       {
         title: 'Especificações Menu',
         url: '/menu-requirements',
-        icon: Settings,
+        icon: ClipboardList,
       },
     ],
+  },
+    {
+    title: 'Eventos Diários',
+    url: '/daily-events',
+    icon: Clock,
   },
   {
     title: 'Search',
