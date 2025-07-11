@@ -6,7 +6,6 @@ import {
   Utensils,
   Pizza,
   Search,
-  Settings,
   Users,
   UtensilsCrossed,
   ClipboardList,

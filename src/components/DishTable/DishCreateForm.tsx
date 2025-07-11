@@ -3,8 +3,6 @@ import { Dish } from '@/shared/types/dish'
 import { useCreateDish } from '@/shared/hooks/dishes/useCreateDish'
 import { Ingredient } from './Ingredient'
 import { useFoods } from '@/shared/hooks/foods/useFoods'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 
 type DishCreateFormProps = {
