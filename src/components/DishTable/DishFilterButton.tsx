@@ -4,6 +4,7 @@ import { Modal } from '../Modal'
 import { SlidersHorizontal } from 'lucide-react'
 import { Dish } from '@/shared/types/dish'
 import { DishFilterForm } from './DishFilterForm'
+import { useFilteredDishes } from '@/shared/hooks/dishes/useFilteredDishes'
 
 type DishFilterButtonProps = {
   filters: {
@@ -22,6 +23,17 @@ export default function DishFilterButton({
   onApplyFilter,
 }: DishFilterButtonProps) {
   const [open, setOpen] = useState(false)
+  const { fetchFilteredDishes } = useFilteredDishes()
+
+  async function handleClearFilters() {
+    onChangeFilter('carbohydrates', '')
+    onChangeFilter('sodium', '')
+    onChangeFilter('calories', '')
+    onChangeFilter('proteins', '')
+
+    const filtered = await fetchFilteredDishes({})
+    onApplyFilter(filtered)
+  }
 
   return (
     <>
@@ -34,6 +46,7 @@ export default function DishFilterButton({
         title="Filtrar por:"
         isOpen={open}
         onClose={() => setOpen(false)}
+        onCancel={handleClearFilters}
         cancelText="Remover filtros"
         confirmText="Aplicar filtros"
         variant="form"
