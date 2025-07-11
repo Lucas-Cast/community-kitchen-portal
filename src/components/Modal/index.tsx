@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils'
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
+  onCancel?: () => void
   onConfirm?: () => void
   title: string
   description?: string
@@ -62,6 +63,7 @@ const variantClasses: Record<NonNullable<ModalProps['variant']>, string> = {
 export const Modal = ({
   isOpen,
   onClose,
+  onCancel,
   onConfirm,
   title,
   description,
@@ -98,7 +100,7 @@ export const Modal = ({
         {children && <div className="py-4 overflow-y-auto max-h-[70vh]">{children}</div>}
 
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={onCancel ?? onClose}>
             {cancelText}
           </Button>
           {(onConfirm || formId) && (
