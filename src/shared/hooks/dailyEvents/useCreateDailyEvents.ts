@@ -27,8 +27,8 @@ export function useCreateDailyEvent(onSuccess?: (dailyEvent: DailyEvent) => void
       toast.success('Evento diário criado com sucesso!')
     } catch (err) {
       console.error(err)
-      toast.error('Erro ao criar evento diário!')
-      setError('Erro ao criar evento diário')
+      toast.error('Erro ao tentar criar evento diário!')
+      setError('Erro ao tentar criar evento diário')
     } finally {
       setLoading(false)
     }

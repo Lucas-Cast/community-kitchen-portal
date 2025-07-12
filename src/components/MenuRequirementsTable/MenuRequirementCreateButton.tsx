@@ -10,9 +10,9 @@ export default function MenuRequirementCreateButton({ onCreate }: { onCreate: (m
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Criar Novo Requisito</Button>
+      <Button onClick={() => setOpen(true)}>Novo Requisito</Button>
       <Modal
-        title="Novo Requisito de Menu"
+        title="Novo Requisito"
         isOpen={open}
         onClose={() => setOpen(false)}
         cancelText="Cancelar"

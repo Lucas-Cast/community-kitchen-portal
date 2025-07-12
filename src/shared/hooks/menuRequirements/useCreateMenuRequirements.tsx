@@ -13,10 +13,10 @@ export function useCreateMenuRequirement(onSuccess?: (menuRequirement: MenuRequi
       setError(null)
       const newMenuRequirement = await menuRequirementService.createMenuRequirements(menuRequirement)
       onSuccess?.(newMenuRequirement)
-      toast.success('Menu requirement created!')
+      toast.success('Requisitos do menu criado com sucesso!')
     } catch (err) {
       console.log(err)
-      toast.error('Error when trying to create a menu requirement!')
+      toast.error('Erro ao tentar criar requisito!')
     } finally {
       setLoading(false)
     }

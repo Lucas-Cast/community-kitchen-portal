@@ -12,11 +12,11 @@ export function useUpdateMenuRequirement(onSuccess?: () => void, onError?: (err:
       try {
         setIsUpdating(true)
         const updatedMenuRequirement = await menuRequirementService.updateMenuRequirements(menuRequirement.id, payload)
-        toast.success('Menu requirement updated!')
+        toast.success('Requisitos do menu atualizado!')
         onSuccess?.()
         return updatedMenuRequirement
       } catch (err) {
-        toast.error('Error when trying to update a menu requirement.')
+        toast.error('Erro ao tentar atualizar requisitos do menu!')
         onError?.(err)
         throw err
       } finally {

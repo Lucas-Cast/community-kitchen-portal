@@ -9,9 +9,6 @@ import CreateDailyEventButton from './DailyEventCreateButton'
 import { Button } from '../ui/button'
 import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
 
-import { Button } from '../ui/button'
-import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
-
 export default function DailyEventTable() {
   const dailyEventData = useDailyEvents()
   const [data, setData] = useState<DailyEvent[]>(dailyEventData.data || [])
@@ -42,7 +39,7 @@ export default function DailyEventTable() {
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-4">
         <Button variant="default" onClick={() => setIsModalOpen(true)}>
-          Ver Eventos Restantes de Hoje
+          Ver Eventos Restantes Hoje
         </Button>
         <div className="flex justify-end">
           <CreateDailyEventButton onCreate={handleCreate} />

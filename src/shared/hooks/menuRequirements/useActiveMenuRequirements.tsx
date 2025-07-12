@@ -26,8 +26,8 @@ export function useActiveMenuRequirements() {
     } catch (error: unknown) {
       const errorMessage =
         error instanceof AxiosError
-          ? error.message ?? 'Erro ao buscar requisitos do menu'
-          : 'Erro ao buscar requisitos do menu'
+          ? error.message ?? 'Erro ao buscar requisitos do menu!'
+          : 'Erro ao buscar requisitos do menu!'
       setmenuRequirement({
         data: undefined,
         error: errorMessage,

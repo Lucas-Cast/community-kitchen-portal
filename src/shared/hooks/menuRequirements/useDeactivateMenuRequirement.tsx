@@ -15,7 +15,7 @@ export function useDeactivateMenuRequirement(onSuccess?: (menu: MenuRequirement)
         })
       onSuccess?.(deactivated)
     } catch (err) {
-      toast.error('Erro ao desativar o menu')
+      toast.error('Erro ao desativar o requisito!')
       console.error(err)
     } finally {
       setLoading(false)

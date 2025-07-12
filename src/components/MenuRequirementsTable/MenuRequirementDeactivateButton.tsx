@@ -24,7 +24,7 @@ export default function MenuRequirementDeactivateButton({ onDeactivate, refetch 
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={() => {}}
-        title="Desativar Menu"
+        title="Desativar Requisito"
         confirmText="Desativar"
         cancelText="Cancelar"
         formId="deactivate-menu-form"

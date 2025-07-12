@@ -60,7 +60,7 @@ export default function MenuRequirementTable() {
       <VerticalDataTable
         columns={columns}
         data={dataState}
-        title={(row: MenuRequirement) => `Requisitos do Menu - ${row.id}`}
+        title={(row: MenuRequirement) => `Requisitos do Menu - ID: ${row.id}`}
       />
     </div>
   );

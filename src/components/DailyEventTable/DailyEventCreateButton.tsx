@@ -17,13 +17,13 @@ export default function CreateDailyEventButton({ onCreate }: Props) {
   return (
     <>
       <Button onClick={() => setOpen(true)}>
-        Criar Evento Diário
+        Novo Evento Diário
       </Button>
       <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={() => {}}
-        title="Criar Evento Diário"
+        title="Novo Evento Diário"
         confirmText="Criar"
         cancelText="Cancelar"
         formId="form-create-daily-event"
