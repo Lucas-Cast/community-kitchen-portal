@@ -87,6 +87,9 @@ export default function DishTable() {
         <div className="flex justify-end">
           <DishCreateButton onCreate={handleCreate} />
         </div>
+        <div className="flex justify-end">
+          <DishCreateButton onCreate={handleCreate} />
+        </div>
       </div>
       <DataTable columns={columns} data={data} />
           
