@@ -12,4 +12,11 @@ export interface Menu {
   dailyEvent: DailyEvent
 }
 
+export interface CreateMenuRequest {
+  availableDay: string
+  dishes: number[]
+  dailyEventId: number
+  activationDate: string
+}
+
 export type WeeklyMenuResponse = Record<WeekDay, Menu[]>

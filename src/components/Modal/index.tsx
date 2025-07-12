@@ -69,7 +69,7 @@ export const Modal = ({
   title,
   description,
   confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
+  cancelText,
   children,
   size = 'md',
   variant = 'default',

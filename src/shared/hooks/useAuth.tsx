@@ -36,9 +36,12 @@ export function useAuth() {
   )
 
   const tokenValidate = useCallback(async () => {
-    const tokenValidateResponse = await userService.tokenValidate()
-    const userResponse = await userService.getUserById(tokenValidateResponse.user.id)
-    setUser(userResponse)
+    const tokenValidateResponse = await userService
+      .tokenValidate()
+      .catch(() => router.push('/auth'))
+    const userResponse =
+      tokenValidateResponse && (await userService.getUserById(tokenValidateResponse.user.id))
+    setUser(userResponse ?? null)
   }, [setUser])
 
   return useMemo(

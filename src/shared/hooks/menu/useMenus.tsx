@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { menuService } from '../services/menu/menu'
-import { Menu } from '../types/menu'
+import { menuService } from '../../services/menu/menu'
+import { Menu } from '../../types/menu'
 
 export function useMenus() {
   const [menuData, setMenuData] = useState<{

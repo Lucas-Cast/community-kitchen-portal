@@ -7,6 +7,9 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
 import { AppSidebar } from '@/components/AppSidebar'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'sonner'
+import { useAuth } from '@/shared/hooks/useAuth'
+import { useEffect } from 'react'
+import { AuthGuard } from '@/components/AuthGuard'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,15 +31,17 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UserProvider>
-          <SidebarProvider>
-            {pathname !== '/auth' && <AppSidebar />}
-            <SidebarInset>
-              {pathname !== '/auth' && <SidebarTrigger />}
-              <Toaster position="top-right" richColors />
+          <AuthGuard>
+            <SidebarProvider>
+              {pathname !== '/auth' && <AppSidebar />}
+              <SidebarInset>
+                {pathname !== '/auth' && <SidebarTrigger />}
+                <Toaster position="top-right" richColors />
 
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
+                {children}
+              </SidebarInset>
+            </SidebarProvider>
+          </AuthGuard>
         </UserProvider>
       </body>
     </html>
