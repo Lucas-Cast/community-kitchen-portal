@@ -29,6 +29,7 @@ export default function DishTable() {
   const { search, results: searchResults, loading: searchLoading } = useDishSearch()
 
   const [data, setData] = useState<Dish[]>([])
+  const [pendingFilterData, setPendingFilterData] = useState<Dish[] | null>(null)
 
   useEffect(() => {
     if (searchActive) {
@@ -54,7 +55,20 @@ export default function DishTable() {
   useEffect(() => {
     setSearchTerm('')
     setSearchActive(false)
+    setFilters({
+      carbohydrates: '',
+      sodium: '',
+      calories: '',
+      proteins: '',
+    })
   }, [viewMode])
+
+  useEffect(() => {
+    if (viewMode === 'all' && pendingFilterData) {
+      setData(pendingFilterData)
+      setPendingFilterData(null)
+    }
+  }, [viewMode, pendingFilterData])
 
   function handleDelete(dishToDelete: Dish) {
     setData(prev => prev.filter(dish => dish.id !== dishToDelete.id))
@@ -69,7 +83,8 @@ export default function DishTable() {
   }
 
   function applyFilteredDishes(filteredData: Dish[]) {
-    setData(filteredData)
+    setPendingFilterData(filteredData)
+    setViewMode('all')
   }
 
   function handleFilterChange(name: string, value: string) {
@@ -77,6 +92,13 @@ export default function DishTable() {
   }
 
   const handleSearch = () => {
+    setFilters({
+      carbohydrates: '',
+      sodium: '',
+      calories: '',
+      proteins: '',
+    })
+
     if (searchTerm.trim()) {
       search(searchTerm, viewMode)
       setSearchActive(true)
