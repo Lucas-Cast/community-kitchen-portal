@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { dailyEventService } from '@/shared/services/dailyEvent/dailyEvent'
 import { DailyEvent } from '@/shared/types/daily-event'
+import { AxiosError } from 'axios'
 
 export function useDailyEvents() {
   const [dailyEventData, setDailyEventData] = useState<{
@@ -22,12 +23,16 @@ export function useDailyEvents() {
         error: undefined,
         isLoading: false,
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.message ?? 'Erro ao carregar eventos diários'
+          : 'Erro ao carregar eventos diários';
       setDailyEventData({
         data: undefined,
-        error: error.message ?? 'Erro ao carregar eventos diários',
+        error: errorMessage,
         isLoading: false,
-      })
+      });
       console.error(error)
     }
   }, [])

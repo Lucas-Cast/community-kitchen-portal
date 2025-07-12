@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { MenuRequirement } from '@/shared/types/menu-requirement'
 import { menuRequirementService } from '@/shared/services/menuRequirement/menuRequirement'
+import { AxiosError } from 'axios'
 
 export function useActiveMenuRequirements() {
   const [menuRequirementData, setmenuRequirement] = useState<{
@@ -22,10 +23,14 @@ export function useActiveMenuRequirements() {
         error: undefined,
         isLoading: false,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.message ?? 'Erro ao buscar requisitos do menu'
+          : 'Erro ao buscar requisitos do menu'
       setmenuRequirement({
         data: undefined,
-        error: error.message ?? 'Erro ao buscar requisitos do menu',
+        error: errorMessage,
         isLoading: false,
       });
     }
