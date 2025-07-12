@@ -23,7 +23,7 @@ interface ModalProps {
   cancelText?: string
   children?: ReactNode
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  variant?: 'default' | 'form' | 'alert' | 'success' | 'error'
+  variant?: 'default' | 'form' | 'alert' | 'success' | 'error' | 'viewer'
   animation?: 'fade' | 'slide-up' | 'slide-down' | 'scale'
   position?: 'center' | 'top'
   formId?: string
@@ -58,6 +58,7 @@ const variantClasses: Record<NonNullable<ModalProps['variant']>, string> = {
   alert: 'border-2 border-yellow-500',
   success: 'border-2 border-green-500',
   error: 'border-2 border-red-500',
+  viewer: 'border border-gray-300',
 }
 
 export const Modal = ({
@@ -100,20 +101,25 @@ export const Modal = ({
         {children && <div className="py-4 overflow-y-auto max-h-[70vh]">{children}</div>}
 
         <DialogFooter>
-          <Button variant="ghost" onClick={onCancel ?? onClose}>
-            {cancelText}
-          </Button>
-          {(onConfirm || formId) && (
-            <Button
-              onClick={!formId ? onConfirm : undefined}
-              type={formId ? 'submit' : 'button'}
-              form={formId}
-            >
-              {confirmText}
-            </Button>
+          {variant !== 'viewer' && (
+            <>
+              <Button variant="ghost" onClick={onCancel ?? onClose}>
+                {cancelText}
+              </Button>
+              {(onConfirm || formId) && (
+                <Button
+                  onClick={!formId ? onConfirm : undefined}
+                  type={formId ? 'submit' : 'button'}
+                  form={formId}
+                >
+                  {confirmText}
+                </Button>
+              )}
+            </>
           )}
         </DialogFooter>
       </DialogContent>
+       
     </Dialog>
   )
 }
