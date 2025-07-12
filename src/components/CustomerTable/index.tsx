@@ -32,7 +32,10 @@ export default function CustomerTable() {
     <div className="container mx-auto py-5">
       <div className="flex justify-between items-center mb-4">
         <AverageCustomerAgeCard averageAge={averageAge} loading={loading} />
-        <CustomerCreateButton onCreate={handleCreate} />
+
+        <div className="flex justify-end">
+          <CustomerCreateButton onCreate={handleCreate} />
+        </div>
       </div>
 
       <DataTable columns={columns} data={data} />

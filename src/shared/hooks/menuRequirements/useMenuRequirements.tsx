@@ -27,7 +27,7 @@ export function useMenuRequirements() {
       .catch(error => {
         setmenuRequirement({
           data: undefined,
-          error: error.message ?? 'Erro ao buscar especificações do menu',
+          error: error.message ?? 'Erro ao buscar requisitos do menu',
           isLoading: false,
         })
       })

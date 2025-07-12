@@ -1,31 +1,18 @@
 'use client'
 
-import { useState } from 'react'
-import { Modal } from '@/components/Modal'
-import { Button } from '@/components/ui/button'
-import { useActiveMenuRequirements } from '@/shared/hooks/menuRequirements/useActiveMenuRequirements'
-import { useDeactivateMenuRequirement } from '@/shared/hooks/menuRequirements/useDeactivateMenuRequirement'
-import { MenuRequirement } from '@/shared/types/menu-requirement'
+import { useState } from 'react';
+import { Modal } from '@/components/Modal';
+import { Button } from '@/components/ui/button';
+import MenuRequirementDeactivateForm from './MenuRequirementDeactivateForm';
+import { MenuRequirement } from '@/shared/types/menu-requirement';
 
 interface Props {
-  onDeactivate?: (menuRequirement: MenuRequirement) => void
+  onDeactivate?: (menuRequirement: MenuRequirement) => void;
+  refetch?: () => void;
 }
 
-export default function MenuRequirementDeactivateButton({ onDeactivate }: Props) {
-  const [open, setOpen] = useState(false)
-  const [selectedId, setSelectedId] = useState<number | null>(null)
-  const { data } = useActiveMenuRequirements()
-  const { deactivate } = useDeactivateMenuRequirement(menu => {
-    onDeactivate?.(menu)
-    setOpen(false)
-  })
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (selectedId !== null) {
-      deactivate(selectedId)
-    }
-  }
+export default function MenuRequirementDeactivateButton({ onDeactivate, refetch }: Props) {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -37,31 +24,18 @@ export default function MenuRequirementDeactivateButton({ onDeactivate }: Props)
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={() => {}}
-        title="Desativar Menu"
+        title="Desativar Requisito"
         confirmText="Desativar"
         cancelText="Cancelar"
         formId="deactivate-menu-form"
         variant="alert"
       >
-        <form onSubmit={handleSubmit} id="deactivate-menu-form" className="space-y-4">
-          <label className="block text-sm font-medium text-gray-700">Selecione o menu</label>
-          <select
-            className="w-full border rounded px-3 py-2"
-            value={selectedId ?? ''}
-            onChange={e => setSelectedId(Number(e.target.value))}
-            required
-          >
-            <option value="" disabled>
-              -- Selecione --
-            </option>
-            {data?.map(mr => (
-              <option key={mr.id} value={mr.id}>
-                ID {mr.id} - {mr.minCalories} cal
-              </option>
-            ))}
-          </select>
-        </form>
+        <MenuRequirementDeactivateForm
+          onDeactivate={onDeactivate}
+          onClose={() => setOpen(false)}
+          refetch={refetch}
+        />
       </Modal>
     </>
-  )
+  );
 }
