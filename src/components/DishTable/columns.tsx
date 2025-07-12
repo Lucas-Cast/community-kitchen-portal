@@ -5,6 +5,7 @@ import { Button } from '../ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
 import { DishEditForm } from './DishEditForm'
+import { DishDetails } from './DishDetails'
 
 export const getColumns = (
   onDelete: (dish: Dish) => void,
@@ -63,6 +64,7 @@ export const getColumns = (
         editUrl={data => `${Routes.LIST_DISHES}/${data.id}`}
         EditForm={DishEditForm}
         onEdit={onEdit}
+        DetailsContent={DishDetails}
       />
     ),
   },

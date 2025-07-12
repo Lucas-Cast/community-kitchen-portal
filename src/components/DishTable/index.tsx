@@ -45,7 +45,7 @@ export default function DishTable() {
 
   return (
     <div className="container mx-auto py-10">
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between items-center mb-4">
         <div className="flex gap-2">
           <DishFilterButton
             filters={filters}
@@ -54,7 +54,9 @@ export default function DishTable() {
           ></DishFilterButton>
         </div>
 
-        <DishCreateButton onCreate={handleCreate} />
+        <div className="flex justify-end">
+          <DishCreateButton onCreate={handleCreate} />
+        </div>
       </div>
       <DataTable columns={columns} data={data} />
     </div>
