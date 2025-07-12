@@ -9,6 +9,9 @@ import CreateDailyEventButton from './DailyEventCreateButton'
 import { Button } from '../ui/button'
 import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
 
+import { Button } from '../ui/button'
+import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
+
 export default function DailyEventTable() {
   const dailyEventData = useDailyEvents()
   const [data, setData] = useState<DailyEvent[]>(dailyEventData.data || [])
