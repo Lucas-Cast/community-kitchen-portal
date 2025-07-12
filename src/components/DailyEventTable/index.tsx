@@ -6,7 +6,6 @@ import { getColumns } from './columns'
 import { DailyEvent } from '@/shared/types/daily-event'
 import { useDailyEvents } from '@/shared/hooks/dailyEvents/useDailyEvents'
 import CreateDailyEventButton from './DailyEventCreateButton'
-
 import { Button } from '../ui/button'
 import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
 
@@ -34,7 +33,7 @@ export default function DailyEventTable() {
   if (dailyEventData.error) return <p className="text-red-500">Erro: {dailyEventData.error}</p>
   if (dailyEventData.isLoading) return <p className="text-gray-500">Carregando eventos diários...</p>
 
-  const columns = getColumns(handleEdit, handleDelete)
+  const columns = getColumns(handleDelete, handleEdit)
 
   return (
     <div className="container mx-auto py-10">

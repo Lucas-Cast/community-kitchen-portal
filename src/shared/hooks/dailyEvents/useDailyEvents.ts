@@ -1,27 +1,42 @@
-import { useState, useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { dailyEventService } from '@/shared/services/dailyEvent/dailyEvent'
 import { DailyEvent } from '@/shared/types/daily-event'
 
 export function useDailyEvents() {
-  const [data, setData] = useState<DailyEvent[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [dailyEventData, setDailyEventData] = useState<{
+    data: DailyEvent[] | undefined
+    error: string | undefined
+    isLoading: boolean
+  }>({
+    data: undefined,
+    error: undefined,
+    isLoading: false,
+  })
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true)
-        const response = await dailyEventService.getDailyEvents()
-        setData(response)
-      } catch (err) {
-        setError('Erro ao carregar eventos diários')
-        console.error(err)
-      } finally {
-        setIsLoading(false)
-      }
+  const fetchDailyEvents = useCallback(async () => {
+    setDailyEventData(prev => ({ ...prev, isLoading: true }))
+    try {
+      const response = await dailyEventService.getDailyEvents()
+      setDailyEventData({
+        data: response,
+        error: undefined,
+        isLoading: false,
+      })
+    } catch (error: any) {
+      setDailyEventData({
+        data: undefined,
+        error: error.message ?? 'Erro ao carregar eventos diários',
+        isLoading: false,
+      })
+      console.error(error)
     }
-    fetchData()
   }, [])
 
-  return { data, isLoading, error }
+  useEffect(() => {
+    fetchDailyEvents()
+  }, [fetchDailyEvents])
+
+  return useMemo(() => {
+    return dailyEventData
+  }, [dailyEventData])
 }
