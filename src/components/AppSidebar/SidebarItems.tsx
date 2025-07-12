@@ -47,7 +47,7 @@ const items = [
         icon: UtensilsCrossed,
       },
       {
-        title: 'Especificações Menu',
+        title: 'Requisitos',
         url: '/menu-requirements',
         icon: ClipboardList,
       },

@@ -47,7 +47,6 @@ export default function DailyEventCreateForm({ onClose, onCreate }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4" id="form-create-daily-event">
-      <h3 className="font-semibold text-lg">Criar Evento Diário</h3>
       <div>
         <Label>Nome</Label>
         <Input
