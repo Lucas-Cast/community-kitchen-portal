@@ -52,6 +52,15 @@ class DailyEventService {
       })
   }
 
+    async getUpcomingEventsToday(): Promise<DailyEvent[]> {
+    return await this.client
+      .get<DailyEvent[]>(`${Routes.LIST_DAILY_EVENTS}/upcoming/daily-events`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error to get upcoming daily events', err)
+        throw err
+      })
+  } 
 }
 
 export const dailyEventService = new DailyEventService()

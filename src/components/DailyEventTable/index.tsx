@@ -7,9 +7,13 @@ import { DailyEvent } from '@/shared/types/daily-event'
 import { useDailyEvents } from '@/shared/hooks/dailyEvents/useDailyEvents'
 import CreateDailyEventButton from './DailyEventCreateButton'
 
+import { Button } from '../ui/button'
+import UpcomingDailyEventsModal from './UpcomingDailyEventModal'
+
 export default function DailyEventTable() {
   const dailyEventData = useDailyEvents()
   const [data, setData] = useState<DailyEvent[]>(dailyEventData.data || [])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     setData(dailyEventData.data || [])
@@ -23,7 +27,7 @@ export default function DailyEventTable() {
     setData(prev => prev.map(de => (de.id === updatedDailyEvent.id ? updatedDailyEvent : de)))
   }
 
-    function handleDelete(dailyEventToDelete: DailyEvent) {
+  function handleDelete(dailyEventToDelete: DailyEvent) {
     setData(prev => prev.filter(de => de.id !== dailyEventToDelete.id))
   }
 
@@ -34,10 +38,19 @@ export default function DailyEventTable() {
 
   return (
     <div className="container mx-auto py-10">
-        <div className="flex justify-end mb-4">
+      <div className="flex justify-between mb-4">
+        <Button variant="default" onClick={() => setIsModalOpen(true)}>
+          Ver Eventos Restantes de Hoje
+        </Button>
         <CreateDailyEventButton onCreate={handleCreate} />
       </div>
+
       <DataTable columns={columns} data={data} />
+
+      <UpcomingDailyEventsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }
