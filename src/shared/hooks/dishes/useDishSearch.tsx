@@ -8,7 +8,7 @@ export function useDishSearch() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function search(term: string) {
+  async function search(term: string, type: 'all' | 'healthy' | 'unhealthy' = 'all') {
     if (!term.trim()) return
 
     setLoading(true)
@@ -16,8 +16,8 @@ export function useDishSearch() {
 
     try {
       const [byNameResult, byDescriptionResult] = await Promise.allSettled([
-        dishService.searchDishesByName(term),
-        dishService.searchDishesByDescription(term),
+        dishService.searchDishesByName(term, type),
+        dishService.searchDishesByDescription(term, type),
       ])
 
       const byName = byNameResult.status === 'fulfilled' ? byNameResult.value : []

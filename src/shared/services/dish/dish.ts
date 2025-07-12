@@ -89,9 +89,14 @@ class DishService {
       })
   }
 
-  async searchDishesByDescription(term: string): Promise<Dish[]> {
+  async searchDishesByDescription(
+    term: string,
+    type: 'all' | 'healthy' | 'unhealthy' = 'all'
+  ): Promise<Dish[]> {
     return this.client
-      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-description/${encodeURIComponent(term)}`)
+      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-description/${encodeURIComponent(term)}`, {
+        params: { type },
+      })
       .then(res => res.data)
       .catch(err => {
         if (err.response?.status === 404) {
@@ -103,9 +108,14 @@ class DishService {
       })
   }
 
-  async searchDishesByName(name: string): Promise<Dish[]> {
+  async searchDishesByName(
+    name: string,
+    type: 'all' | 'healthy' | 'unhealthy' = 'all'
+  ): Promise<Dish[]> {
     return this.client
-      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-name/${encodeURIComponent(name)}`)
+      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-name/${encodeURIComponent(name)}`, {
+        params: { type },
+      })
       .then(res => res.data)
       .catch(err => {
         if (err.response?.status === 404) {
