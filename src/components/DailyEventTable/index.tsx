@@ -37,11 +37,13 @@ export default function DailyEventTable() {
 
   return (
     <div className="container mx-auto py-10">
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between items-center mb-4">
         <Button variant="default" onClick={() => setIsModalOpen(true)}>
           Ver Eventos Restantes de Hoje
         </Button>
-        <CreateDailyEventButton onCreate={handleCreate} />
+        <div className="flex justify-end">
+          <CreateDailyEventButton onCreate={handleCreate} />
+        </div>
       </div>
 
       <DataTable columns={columns} data={data} />
