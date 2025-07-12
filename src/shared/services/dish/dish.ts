@@ -116,6 +116,26 @@ class DishService {
         throw err
       })
   }
+
+  async getHealthyDishes(): Promise<Dish[]> {
+    return this.client
+      .get<Dish[]>(`${Routes.LIST_DISHES}/list-all/healthy`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error fetching healthy dishes:', err)
+        throw err
+      })
+  }
+
+  async getUnhealthyDishes(): Promise<Dish[]> {
+    return this.client
+      .get<Dish[]>(`${Routes.LIST_DISHES}/list-all/unhealthy`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error fetching unhealthy dishes:', err)
+        throw err
+      })
+  }
 }
 
 export const dishService = new DishService()
