@@ -88,6 +88,34 @@ class DishService {
         throw err
       })
   }
+
+  async searchDishesByDescription(term: string): Promise<Dish[]> {
+    return this.client
+      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-description/${encodeURIComponent(term)}`)
+      .then(res => res.data)
+      .catch(err => {
+        if (err.response?.status === 404) {
+          return []
+        }
+
+        console.error(`Error searching dishes by description "${term}"`, err)
+        throw err
+      })
+  }
+
+  async searchDishesByName(name: string): Promise<Dish[]> {
+    return this.client
+      .get<Dish[]>(`${Routes.LIST_DISHES}/dishes-by-name/${encodeURIComponent(name)}`)
+      .then(res => res.data)
+      .catch(err => {
+        if (err.response?.status === 404) {
+          return []
+        }
+
+        console.error(`Error searching dishes by name "${name}"`, err)
+        throw err
+      })
+  }
 }
 
 export const dishService = new DishService()
