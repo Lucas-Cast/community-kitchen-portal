@@ -1,4 +1,6 @@
 import { useDishes } from '@/shared/hooks/dishes/useDishes'
+import { useHealthyDishes } from '@/shared/hooks/dishes/useHealthyDishes'
+import { useUnhealthyDishes } from '@/shared/hooks/dishes/useUnhealthyDishes'
 import { DataTable } from '../DataTable'
 import { getColumns } from './columns'
 import { useEffect, useState } from 'react'
@@ -7,13 +9,16 @@ import DishCreateButton from './DishCreateButton'
 import DishFilterButton from './DishFilterButton'
 import SearchBox from '../SearchBox'
 import { useDishSearch } from '@/shared/hooks/dishes/useDishSearch'
+import DishViewMode from './DishViewMode'
 
 export default function DishTable() {
-  const dishData = useDishes()
-  const [data, setData] = useState(dishData.data || [])
+  const allDishes = useDishes()
+  const healthyDishes = useHealthyDishes()
+  const unhealthyDishes = useUnhealthyDishes()
+
+  const [viewMode, setViewMode] = useState<'all' | 'healthy' | 'unhealthy'>('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [searchActive, setSearchActive] = useState(false)
-
   const [filters, setFilters] = useState({
     carbohydrates: '',
     sodium: '',
@@ -23,22 +28,54 @@ export default function DishTable() {
 
   const { search, results: searchResults, loading: searchLoading } = useDishSearch()
 
-  useEffect(() => {
-    setData(dishData.data || [])
-  }, [dishData.data])
+  const [data, setData] = useState<Dish[]>([])
+  const [pendingFilterData, setPendingFilterData] = useState<Dish[] | null>(null)
 
   useEffect(() => {
     if (searchActive) {
       setData(searchResults)
+    } else {
+      if (viewMode === 'all') {
+        setData(allDishes.data || [])
+      } else if (viewMode === 'healthy') {
+        setData(healthyDishes.data || [])
+      } else {
+        setData(unhealthyDishes.data || [])
+      }
     }
-  }, [searchResults, searchActive])
+  }, [
+    viewMode,
+    allDishes.data,
+    healthyDishes.data,
+    unhealthyDishes.data,
+    searchActive,
+    searchResults,
+  ])
+
+  useEffect(() => {
+    setSearchTerm('')
+    setSearchActive(false)
+    setFilters({
+      carbohydrates: '',
+      sodium: '',
+      calories: '',
+      proteins: '',
+    })
+  }, [viewMode])
+
+  useEffect(() => {
+    if (viewMode === 'all' && pendingFilterData) {
+      setData(pendingFilterData)
+      setPendingFilterData(null)
+    }
+  }, [viewMode, pendingFilterData])
 
   function handleDelete(dishToDelete: Dish) {
     setData(prev => prev.filter(dish => dish.id !== dishToDelete.id))
   }
 
   function handleEdit(updatedDish: Dish) {
-    setData(prev => prev.map(f => (f.id === updatedDish.id ? updatedDish : f)))
+    setData(prev => prev.map(dish => (dish.id === updatedDish.id ? updatedDish : dish)))
   }
 
   function handleCreate(newDish: Dish) {
@@ -46,7 +83,8 @@ export default function DishTable() {
   }
 
   function applyFilteredDishes(filteredData: Dish[]) {
-    setData(filteredData)
+    setPendingFilterData(filteredData)
+    setViewMode('all')
   }
 
   function handleFilterChange(name: string, value: string) {
@@ -54,12 +92,25 @@ export default function DishTable() {
   }
 
   const handleSearch = () => {
+    setFilters({
+      carbohydrates: '',
+      sodium: '',
+      calories: '',
+      proteins: '',
+    })
+
     if (searchTerm.trim()) {
-      search(searchTerm)
+      search(searchTerm, viewMode)
       setSearchActive(true)
     } else {
       setSearchActive(false)
-      setData(dishData.data || [])
+      if (viewMode === 'all') {
+        setData(allDishes.data || [])
+      } else if (viewMode === 'healthy') {
+        setData(healthyDishes.data || [])
+      } else {
+        setData(unhealthyDishes.data || [])
+      }
     }
   }
 
@@ -73,7 +124,7 @@ export default function DishTable() {
             filters={filters}
             onChangeFilter={handleFilterChange}
             onApplyFilter={applyFilteredDishes}
-          ></DishFilterButton>
+          />
 
           <SearchBox
             value={searchTerm}
@@ -82,14 +133,16 @@ export default function DishTable() {
             disabled={searchLoading}
             placeholder="Buscar prato por nome ou descrição"
           />
+
+          <DishViewMode viewMode={viewMode} onChange={setViewMode} />
         </div>
 
         <div className="flex justify-end">
           <DishCreateButton onCreate={handleCreate} />
         </div>
       </div>
+
       <DataTable columns={columns} data={data} />
-          
     </div>
   )
 }
