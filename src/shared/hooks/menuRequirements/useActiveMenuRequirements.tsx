@@ -14,30 +14,34 @@ export function useActiveMenuRequirements() {
   })
 
   const fetchActiveMenuRequirements = useCallback(async () => {
-    setmenuRequirement(prev => ({ ...prev, isLoading: true }))
-    await menuRequirementService
-      .getActiveMenuRequirements()
-      .then(response => {
-        setmenuRequirement({
-          data: response,
-          error: undefined,
-          isLoading: false,
-        })
-      })
-      .catch(error => {
-        setmenuRequirement({
-          data: undefined,
-          error: error.message ?? 'Erro ao buscar especificações do menu',
-          isLoading: false,
-        })
-      })
-  }, [])
+    setmenuRequirement(prev => ({ ...prev, isLoading: true }));
+    try {
+      const response = await menuRequirementService.getActiveMenuRequirements();
+      setmenuRequirement({
+        data: response,
+        error: undefined,
+        isLoading: false,
+      });
+    } catch (error: any) {
+      setmenuRequirement({
+        data: undefined,
+        error: error.message ?? 'Erro ao buscar requisitos do menu',
+        isLoading: false,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     fetchActiveMenuRequirements()
   }, [fetchActiveMenuRequirements])
 
-  return useMemo(() => {
-    return menuRequirementData
-  }, [menuRequirementData])
+  return useMemo(
+    () => ({
+      data: menuRequirementData.data,
+      error: menuRequirementData.error,
+      isLoading: menuRequirementData.isLoading,
+      refetch: fetchActiveMenuRequirements,
+    }),
+    [menuRequirementData, fetchActiveMenuRequirements]
+  );
 }
