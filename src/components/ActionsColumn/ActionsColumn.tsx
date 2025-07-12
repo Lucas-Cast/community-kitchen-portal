@@ -23,6 +23,8 @@ type ActionsColumnProps<T> = {
 
   editUrl?: (data: T) => string
   EditForm?: React.ComponentType<{ data: T; onSuccess: (updatedData: T) => void }>
+
+  DetailsContent?: React.ComponentType<{ data: T }>
 }
 
 export function ActionsColumn<T>({
@@ -30,12 +32,14 @@ export function ActionsColumn<T>({
   deleteUrl,
   onDelete,
   onEdit,
-  label = '⚙️ Ações',
+  label = '⚙ Ações',
   editUrl,
   EditForm,
+  DetailsContent,
 }: ActionsColumnProps<T>) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false)
 
   const { deleteItem, isDeleting } = useDeleteResource<T>({
     getUrl: deleteUrl!,
@@ -71,6 +75,15 @@ export function ActionsColumn<T>({
         >
           <DropdownMenuLabel className="px-3 py-2 text-sm">{label}</DropdownMenuLabel>
 
+          {DetailsContent && (
+            <DropdownMenuItem
+              onClick={() => setDetailsModalOpen(true)}
+              className="hover:bg-gray-700/50 cursor-pointer px-3 py-2"
+            >
+              🔍 Ver detalhes
+            </DropdownMenuItem>
+          )}
+
           {editUrl && EditForm && (
             <DropdownMenuItem
               onClick={handleEditOpen}
@@ -85,12 +98,11 @@ export function ActionsColumn<T>({
               onClick={() => setDeleteModalOpen(true)}
               className="hover:bg-gray-700/50 cursor-pointer px-3 py-2 text-red-400"
             >
-              🗑️ Deletar
+              🗑 Deletar
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-
       {/* Modal de Deleção */}
       {deleteUrl && (
         <Modal
@@ -104,7 +116,6 @@ export function ActionsColumn<T>({
           variant="alert"
         />
       )}
-
       {/* Modal de Edição */}
       {editUrl && EditForm && (
         <Modal
@@ -132,6 +143,19 @@ export function ActionsColumn<T>({
           )}
         </Modal>
       )}
+      {/* Modal Ver Detalhes */}
+      {DetailsContent && (
+        <Modal
+          isOpen={detailsModalOpen}
+          onClose={() => setDetailsModalOpen(false)}
+          title="Detalhes do item"
+          variant="viewer"
+          size="lg"
+        >
+          <DetailsContent data={rowData} />
+        </Modal>
+      )}
+          
     </div>
   )
 }

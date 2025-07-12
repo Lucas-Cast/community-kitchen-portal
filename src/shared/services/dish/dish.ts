@@ -61,10 +61,30 @@ class DishService {
     if (filters.offset !== undefined) params.append('offset', filters.offset.toString())
 
     return this.client
-      .get<Dish[]>(`/dishes/filtered/by-parameter?${params.toString()}`)
+      .get<Dish[]>(`${Routes.LIST_DISHES}/filtered/by-parameter?${params.toString()}`)
       .then(res => res.data)
       .catch(err => {
         console.error('Error fetching filtered dishes:', err)
+        throw err
+      })
+  }
+
+  async getDishNutritionFacts(id: number): Promise<DishNutritionSummary> {
+    return await this.client
+      .get<DishNutritionSummary>(`${Routes.LIST_DISHES}/${id}/nutrition-facts`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error fetching dish details:', err)
+        throw err
+      })
+  }
+
+  async getDishHealthyStatus(id: number): Promise<{ dish: Dish; healthy: boolean }> {
+    return this.client
+      .get<{ dish: Dish; healthy: boolean }>(`${Routes.LIST_DISHES}/${id}/healthy`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error(`Error checking if dish ${id} is healthy:`, err)
         throw err
       })
   }
