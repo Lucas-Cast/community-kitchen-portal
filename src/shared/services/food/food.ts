@@ -29,6 +29,19 @@ class FoodService {
     const response = await this.client.post<Food>('/foods', food)
     return response.data
   }
+
+  async searchFoodsByName(name: string): Promise<Food[]> {
+    return await this.client
+      .get<Food[]>(`${Routes.LIST_FOODS}/foods-by-name/${encodeURIComponent(name)}`)
+      .then(res => res.data)
+      .catch(err => {
+        if (err.response?.status === 404) {
+          return [];
+        }
+        console.error(`Error searching foods by name "${name}":`, err);
+        throw err;
+      });
+  }
 }
 
 export const foodService = new FoodService()
