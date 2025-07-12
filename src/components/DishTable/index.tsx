@@ -51,6 +51,11 @@ export default function DishTable() {
     searchResults,
   ])
 
+  useEffect(() => {
+    setSearchTerm('')
+    setSearchActive(false)
+  }, [viewMode])
+
   function handleDelete(dishToDelete: Dish) {
     setData(prev => prev.filter(dish => dish.id !== dishToDelete.id))
   }
