@@ -75,6 +75,8 @@ export function ActionsColumn<T>({
         >
           <DropdownMenuLabel className="px-3 py-2 text-sm">{label}</DropdownMenuLabel>
 
+          <div className="border-t border-gray-700 my-1" />
+
           {DetailsContent && (
             <DropdownMenuItem
               onClick={() => setDetailsModalOpen(true)}

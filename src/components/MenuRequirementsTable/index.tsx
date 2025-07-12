@@ -65,7 +65,10 @@ export default function MenuRequirementTable() {
     <div className="container mx-auto py-10">
       <div className="flex justify-between mb-4">
         <CreateMenuRequirementButton onCreate={handleCreate} />
-        <MenuRequirementDeactivateButton onDeactivate={handleDeactivate} />
+
+        <div className="flex justify-end">
+          <MenuRequirementDeactivateButton onDeactivate={handleDeactivate} />
+        </div>
       </div>
       <VerticalDataTable
         columns={columns}
