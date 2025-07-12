@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { WeeklyMenuResponse } from '../types/menu'
-import { menuService } from '../services/menu/menu'
+import { WeeklyMenuResponse } from '../../types/menu'
+import { menuService } from '../../services/menu/menu'
 
 export function useWeeklyMenus() {
   const [weeklyMenuData, setWeeklyMenuData] = useState<{
@@ -41,4 +41,3 @@ export function useWeeklyMenus() {
     return weeklyMenuData
   }, [weeklyMenuData])
 }
-

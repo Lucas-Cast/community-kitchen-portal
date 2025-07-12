@@ -1,4 +1,4 @@
-import { useWeeklyMenus } from '@/shared/hooks/useWeeklyMenu'
+import { useWeeklyMenus } from '@/shared/hooks/menu/useWeeklyMenu'
 import React, { useOptimistic } from 'react'
 import {
   Accordion,

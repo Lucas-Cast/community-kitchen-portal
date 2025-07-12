@@ -1,6 +1,6 @@
 import { createAxiosClient } from '@/shared/factories/axios-client'
 import { environment } from '@/environment'
-import { Menu, WeeklyMenuResponse } from '@/shared/types/menu'
+import { CreateMenuRequest, Menu, WeeklyMenuResponse } from '@/shared/types/menu'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
 
@@ -13,7 +13,7 @@ class MenuService {
 
   async getMenus(): Promise<Menu[]> {
     return await this.client
-      .get<Menu[]>(Routes.LIST_MENUS)
+      .get<Menu[]>(Routes.MENUS)
       .then(res => res.data)
       .catch(err => {
         console.error('Error fetching menus:', err)
@@ -27,6 +27,15 @@ class MenuService {
       .then(res => res.data)
       .catch(err => {
         console.error('Error fetching weekly menus:', err)
+        throw err
+      })
+  }
+  async createMenu(request: CreateMenuRequest) {
+    return await this.client
+      .post(Routes.MENUS, request)
+      .then(res => res.data)
+      .catch(err => {
+        console.log('Error creating menu:', err)
         throw err
       })
   }

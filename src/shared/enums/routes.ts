@@ -3,10 +3,11 @@ export enum Routes {
   LIST_WEEKLY_MENUS = '/menus/list-weekly-menus',
   TOKEN_VALIDATE = '/auth/validate',
   USER_BY_ID = '/usuarios/',
-  LIST_MENUS = '/menus',
+  MENUS = '/menus',
   LIST_DISHES = '/dishes',
   LIST_ACTIVE_MENU_REQUIREMENTS = '/menu-requirements/get-active-menu-requirements',
   LIST_MENU_REQUIREMENTS = '/menu-requirements',
   LIST_FOODS = '/foods',
-  LIST_CUSTOMERS = '/customers'
+  LIST_CUSTOMERS = '/customers',
+  LIST_DAILY_EVENTS = '/daily-events',
 }

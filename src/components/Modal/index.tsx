@@ -66,7 +66,7 @@ export const Modal = ({
   title,
   description,
   confirmText = 'Confirmar',
-  cancelText = 'Cancelar',
+  cancelText,
   children,
   size = 'md',
   variant = 'default',
@@ -98,9 +98,11 @@ export const Modal = ({
         {children && <div className="py-4 overflow-y-auto max-h-[70vh]">{children}</div>}
 
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>
-            {cancelText}
-          </Button>
+          {cancelText && (
+            <Button variant="ghost" onClick={onClose}>
+              {cancelText}
+            </Button>
+          )}
           {(onConfirm || formId) && (
             <Button
               onClick={!formId ? onConfirm : undefined}
