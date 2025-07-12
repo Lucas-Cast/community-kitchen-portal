@@ -11,11 +11,6 @@ export const getColumns = (
   onEdit: (dailyEvent: DailyEvent) => void
 ): ColumnDef<DailyEvent>[] => [
   {
-    accessorKey: 'id',
-    header: () => <div className="text-left">ID</div>,
-    cell: ({ row }) => <div className="text-left">{row.getValue('id')}</div>,
-  },
-  {
     accessorKey: 'name',
     header: () => <div className="text-left">Nome</div>,
     cell: ({ row }) => <div className="text-left">{row.getValue('name')}</div>,
@@ -40,6 +35,22 @@ export const getColumns = (
         {requirement ? requirement.id : 'N/A'}
       </div>
       )
+    },
+  },
+  {
+    accessorKey: 'createdAt',
+    header: () => <div className="text-left">Criado em</div>,
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('createdAt')).toLocaleDateString('pt-BR')
+      return <div className="text-left">{date}</div>
+    },
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: () => <div className="text-left">Atualizado em</div>,
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('updatedAt')).toLocaleDateString('pt-BR')
+      return <div className="text-left">{date}</div>
     },
   },
   {
