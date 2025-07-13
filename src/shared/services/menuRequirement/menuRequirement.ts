@@ -61,16 +61,6 @@ async createMenuRequirements(menuRequirement: Partial<MenuRequirement>): Promise
       })
   }
 
-  async deleteMenuRequirement(id: number): Promise<void> {
-    return await this.client
-      .delete(`${Routes.LIST_MENU_REQUIREMENTS}/${id}`)
-      .then(() => void 0)
-      .catch(err => {
-        console.error(`Error deleting menu requirement ${id}:`, err)
-        throw err
-      })
-  }
-
 }
 
 export const menuRequirementService = new MenuRequirementService()
