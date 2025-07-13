@@ -7,6 +7,7 @@ import {
   Pizza,
   Search,
   Users,
+  ChartNoAxesColumn,
   UtensilsCrossed,
   ClipboardList,
   Clock,
@@ -70,8 +71,19 @@ const items = [
   },
   {
     title: 'Clientes',
-    url: '/customers',
     icon: Users,
+    subItems: [
+      {
+        title: 'Gerenciar Clientes',
+        url: '/customers',
+        icon: Users,
+      },
+      {
+        title: 'Estatísticas',
+        url: '/customers-statistics',
+        icon: ChartNoAxesColumn,
+      },
+    ],
   },
 ]
 

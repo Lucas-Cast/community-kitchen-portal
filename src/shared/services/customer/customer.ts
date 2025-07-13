@@ -3,6 +3,7 @@ import { environment } from '@/environment'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
 import { Customer } from '@/shared/types/customer'
+import { MostFrequentCustomer } from '@/shared/types/most-frequent-customer'
 
 class CustomerService {
   private readonly client: AxiosInstance
@@ -22,12 +23,35 @@ class CustomerService {
   }
 
   async create(customer: Partial<Customer>): Promise<Customer> {
-    const response = await this.client.post<Customer>('/customers', customer)
-    return response.data
+    return await this.client
+      .post<Customer>(Routes.LIST_CUSTOMERS, customer)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error creating customer:', err)
+        throw err
+      })
   }
+
   async getAverageAge(): Promise<number> {
-    const response = await this.client.get<{ averageAge: number }>('/customers/average/age')
-    return response.data.averageAge
+    return await this.client
+      .get<{ averageAge: number }>(`${Routes.LIST_CUSTOMERS}/average/age`)
+      .then(res => res.data.averageAge)
+      .catch(err => {
+        console.error('Error fetching average age:', err)
+        throw err
+      })
+  }
+
+  async getTopCustomers(page = 1, limit = 10): Promise<MostFrequentCustomer[]> {
+    return await this.client
+      .get<MostFrequentCustomer[]>(`${Routes.LIST_CUSTOMERS}/filter/mostFrequent`, {
+        params: { page, limit },
+      })
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error fetching top customers:', err)
+        throw err
+      })
   }
 }
 
