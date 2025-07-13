@@ -21,6 +21,16 @@ class MenuRequirementService {
       })
   }
 
+  async getInactiveMenuRequirements(): Promise<MenuRequirement[]> {
+    return await this.client
+      .get<MenuRequirement[]>(`${Routes.LIST_MENU_REQUIREMENTS}/get-inactive-menu-requirements`)
+      .then(res => res.data || [])
+      .catch(err => {
+        console.error('Error fetching inactive menu requirements:', err);
+        throw err;
+      });
+  }
+
     async getMenuRequirements(): Promise<MenuRequirement[]> {
     return await this.client
       .get<MenuRequirement[]>(Routes.LIST_MENU_REQUIREMENTS)
@@ -61,6 +71,15 @@ async createMenuRequirements(menuRequirement: Partial<MenuRequirement>): Promise
       })
   }
 
+  async activateMenuRequirement(id: number): Promise<MenuRequirement> {
+    return await this.client
+      .patch<MenuRequirement>(`${Routes.LIST_MENU_REQUIREMENTS}/${id}/activate`)
+      .then(res => res.data)
+      .catch(err => {
+        console.error(`Error activating menu requirement ${id}:`, err);
+        throw err;
+      });
+  }
 }
 
 export const menuRequirementService = new MenuRequirementService()

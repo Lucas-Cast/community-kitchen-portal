@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '../ui/form'
-import { useDailyEvents } from '@/shared/hooks/daily-event/useDailyEvent'
+import { useDailyEvents } from '@/shared/hooks/dailyEvents/useDailyEvents'
 import { useCallback, useOptimistic } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { useDishes } from '@/shared/hooks/dishes/useDishes'
@@ -13,6 +13,7 @@ import { useUpsertMenu } from '@/shared/hooks/menu/useUpsertMenu'
 import { CreateMenuRequest, Menu } from '@/shared/types/menu'
 import { Button } from '../ui/button'
 import { WeekDay } from '@/shared/enums/week-days'
+
 
 interface CreateMenuFormProps {
   data?: Menu

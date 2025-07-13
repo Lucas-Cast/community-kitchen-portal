@@ -1,21 +1,22 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { MenuRequirement } from '@/shared/types/menu-requirement';
-import { useActiveMenuRequirements } from '@/shared/hooks/menuRequirements/useActiveMenuRequirements';
-import { useDeactivateMenuRequirement } from '@/shared/hooks/menuRequirements/useDeactivateMenuRequirement';
+
+import { useActivateMenuRequirement } from '@/shared/hooks/menuRequirements/useActivateMenuRequirement';
+import { useInactiveMenuRequirements } from '@/shared/hooks/menuRequirements/useInactiveMenuRequirement';
 
 interface Props {
-  onDeactivate?: (menuRequirement: MenuRequirement) => void;
+  onActivate?: (menuRequirement: MenuRequirement) => void;
   onClose: () => void;
   refetch?: () => void;
 }
 
-export default function MenuRequirementDeactivateForm({ onDeactivate, onClose, refetch }: Props) {
+export default function MenuRequirementActivateForm({ onActivate, onClose, refetch }: Props) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const { data, isLoading } = useActiveMenuRequirements();
-  const { deactivate } = useDeactivateMenuRequirement(menu => {
-    onDeactivate?.(menu);
+  const { data, loading, error } = useInactiveMenuRequirements();
+  const { activate } = useActivateMenuRequirement(menu => {
+    onActivate?.(menu);
     refetch?.();
     onClose();
   });
@@ -23,14 +24,15 @@ export default function MenuRequirementDeactivateForm({ onDeactivate, onClose, r
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (selectedId !== null) {
-      deactivate(selectedId);
+      activate(selectedId);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} id="deactivate-menu-form" className="space-y-4">
+    <form onSubmit={handleSubmit} id="activate-menu-form" className="space-y-4">
       <label className="block text-sm font-medium text-gray-700">Selecione o requisito</label>
-      {isLoading ? (
+      {error && <p className="text-red-500">{error}</p>}
+      {loading ? (
         <p>Carregando...</p>
       ) : (
         <select
