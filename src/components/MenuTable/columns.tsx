@@ -3,6 +3,8 @@ import { ArrowUpDown } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Menu } from '@/shared/types/menu'
 import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
+import { Routes } from '@/shared/enums/routes'
+import CreateMenuForm from './CreateMenuForm'
 
 export const columns: ColumnDef<Menu>[] = [
   {
@@ -61,11 +63,10 @@ export const columns: ColumnDef<Menu>[] = [
       return (
         <ActionsColumn
           rowData={row.original}
-          deleteUrl={data => `/foods/${data.id}`}
-          // onDelete={onDelete}
-          editUrl={data => `/foods/${data.id}`}
-          // EditForm={FoodEditForm}
-          // onEdit={onEdit}
+          deleteUrl={data => `${Routes.MENUS}/${data.id}`}
+          onDelete={() => window.location.reload()}
+          CustomEditForm={<CreateMenuForm data={row.original} />}
+          isCustomEdit
         />
       )
     },

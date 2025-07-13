@@ -2,28 +2,37 @@ import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '../ui/form'
 import { useDailyEvents } from '@/shared/hooks/daily-event/useDailyEvent'
-import { useCallback, useEffect, useOptimistic } from 'react'
+import { useCallback, useOptimistic } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { useDishes } from '@/shared/hooks/dishes/useDishes'
 import { MultiSelect } from '../MultiSelect'
 import { menuFormSchema, MenuFormSchema } from './schema'
 import { useUserContext } from '@/shared/contexts/UserContext'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js'
-import { useCreateMenu } from '@/shared/hooks/menu/useCreateMenu'
-import { CreateMenuRequest } from '@/shared/types/menu'
+import { useUpsertMenu } from '@/shared/hooks/menu/useUpsertMenu'
+import { CreateMenuRequest, Menu } from '@/shared/types/menu'
 import { Button } from '../ui/button'
 import { WeekDay } from '@/shared/enums/week-days'
 
-export default function CreateMenuForm() {
+interface CreateMenuFormProps {
+  data?: Menu
+}
+
+export default function CreateMenuForm({ data }: CreateMenuFormProps) {
   const { data: dailyEventData } = useDailyEvents()
   const { data: dishesData } = useDishes()
   const [optmisticDishesData] = useOptimistic(dishesData || [])
   const [optimisticdailyEventData] = useOptimistic(dailyEventData || [])
   const user = useUserContext()
-  const createMenu = useCreateMenu()
+  const { createMenu, updateMenu } = useUpsertMenu()
   const form = useForm<MenuFormSchema>({
     resolver: zodResolver(menuFormSchema),
-    defaultValues: { createdBy: user.user?.nome || '' },
+    defaultValues: {
+      availability: data?.availableDay,
+      meal: data?.dailyEvent?.name || '',
+      dishes: data?.dishes.map(dish => dish.name) || [],
+      createdBy: data?.createdBy || user.user?.nome || '',
+    },
   })
 
   const onSubmit = useCallback(async () => {
@@ -46,8 +55,9 @@ export default function CreateMenuForm() {
       activationDate: new Date().toISOString(),
     }
 
-    await createMenu(request).then(() => window.location.reload())
-  }, [createMenu, user.user?.nome, optimisticdailyEventData, optmisticDishesData])
+    if (!data) await createMenu(request).then(() => window.location.reload())
+    else await updateMenu(data.id, request).then(() => window.location.reload())
+  }, [createMenu, user.user?.nome, optimisticdailyEventData, optmisticDishesData, data])
 
   return (
     <Form {...form}>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +20,10 @@ type ActionsColumnProps<T> = {
   onDelete?: (data: T) => void
   onEdit?: (updatedData: T) => void
   label?: string
-
   editUrl?: (data: T) => string
   EditForm?: React.ComponentType<{ data: T; onSuccess: (updatedData: T) => void }>
-
+  CustomEditForm?: ReactNode
+  isCustomEdit?: boolean
   DetailsContent?: React.ComponentType<{ data: T }>
 }
 
@@ -36,6 +36,8 @@ export function ActionsColumn<T>({
   editUrl,
   EditForm,
   DetailsContent,
+  CustomEditForm,
+  isCustomEdit,
 }: ActionsColumnProps<T>) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
@@ -86,13 +88,22 @@ export function ActionsColumn<T>({
             </DropdownMenuItem>
           )}
 
-          {editUrl && EditForm && (
+          {editUrl && EditForm ? (
             <DropdownMenuItem
               onClick={handleEditOpen}
               className="hover:bg-gray-700/50 cursor-pointer px-3 py-2"
             >
               🖉 Editar
             </DropdownMenuItem>
+          ) : (
+            isCustomEdit && (
+              <DropdownMenuItem
+                onClick={handleEditOpen}
+                className="hover:bg-gray-700/50 cursor-pointer px-3 py-2"
+              >
+                🖉 Editar
+              </DropdownMenuItem>
+            )
           )}
 
           {deleteUrl && (
@@ -119,7 +130,7 @@ export function ActionsColumn<T>({
         />
       )}
       {/* Modal de Edição */}
-      {editUrl && EditForm && (
+      {editUrl && EditForm && !CustomEditForm ? (
         <Modal
           isOpen={editModalOpen}
           onClose={() => {
@@ -144,7 +155,20 @@ export function ActionsColumn<T>({
             <p className="text-center py-8">Carregando dados...</p>
           )}
         </Modal>
+      ) : (
+        <Modal
+          isOpen={editModalOpen}
+          onClose={() => {
+            setEditModalOpen(false)
+            setEditData(null)
+          }}
+          title="Editar item"
+          variant="viewer"
+        >
+          {CustomEditForm}
+        </Modal>
       )}
+
       {/* Modal Ver Detalhes */}
       {DetailsContent && (
         <Modal
@@ -157,7 +181,6 @@ export function ActionsColumn<T>({
           <DetailsContent data={rowData} />
         </Modal>
       )}
-          
     </div>
   )
 }

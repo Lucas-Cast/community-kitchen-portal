@@ -39,6 +39,16 @@ class MenuService {
         throw err
       })
   }
+
+  async updateMenu(id: number, request: CreateMenuRequest) {
+    return await this.client
+      .put(`${Routes.MENUS}/${id}`, request)
+      .then(res => res.data)
+      .catch(err => {
+        console.log('Error updating menu:', err)
+        throw err
+      })
+  }
 }
 export const menuService = new MenuService()
 export default MenuService
