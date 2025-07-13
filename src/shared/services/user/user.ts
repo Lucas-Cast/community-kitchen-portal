@@ -2,7 +2,13 @@ import { createAxiosClient } from '@/shared/factories/axios-client'
 import { environment } from '@/environment'
 import { AxiosInstance } from 'axios'
 import { Routes } from '@/shared/enums/routes'
-import { SignInRequest, SignInResponse, TokenValidateResponse, User } from '@/shared/types/auth'
+import {
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  TokenValidateResponse,
+  User,
+} from '@/shared/types/auth'
 
 class UserService {
   private readonly client: AxiosInstance
@@ -14,6 +20,15 @@ class UserService {
   async signIn(request: SignInRequest): Promise<SignInResponse> {
     return await this.client
       .post<SignInResponse>(Routes.AUTH_LOGIN, request)
+      .then(res => res.data)
+      .catch(err => {
+        console.error('Error during authentication:', err)
+        throw err
+      })
+  }
+  async signUp(request: SignUpRequest): Promise<string> {
+    return await this.client
+      .post<string>(Routes.USERS, request)
       .then(res => res.data)
       .catch(err => {
         console.error('Error during authentication:', err)

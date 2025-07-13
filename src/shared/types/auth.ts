@@ -3,6 +3,12 @@ export interface SignInRequest {
   senha: string
 }
 
+export interface SignUpRequest {
+  email: string
+  nome: string
+  senha: string
+}
+
 export interface User {
   id: number
   nome: string

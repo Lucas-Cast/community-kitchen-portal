@@ -150,7 +150,7 @@ export default function CreateMenuForm({ data }: CreateMenuFormProps) {
         />
 
         <div className="flex justify-end">
-          <Button type="submit">Criar Menu</Button>
+          <Button type="submit">{data ? 'Atualizar Menu' : 'Criar Menu'}</Button>
         </div>
       </form>
     </Form>
