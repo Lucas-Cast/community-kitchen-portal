@@ -9,7 +9,7 @@ import {
   Users,
   UtensilsCrossed,
   ClipboardList,
-  Clock
+  Clock,
 } from 'lucide-react'
 import {
   SidebarMenuItem,
@@ -42,8 +42,8 @@ const items = [
         icon: Calendar,
       },
       {
-        title: 'Daily Menus',
-        url: '#',
+        title: 'Atendimentos',
+        url: '/menu-attendance',
         icon: UtensilsCrossed,
       },
       {
@@ -53,7 +53,7 @@ const items = [
       },
     ],
   },
-    {
+  {
     title: 'Eventos Diários',
     url: '/daily-events',
     icon: Clock,
