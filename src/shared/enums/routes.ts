@@ -10,4 +10,5 @@ export enum Routes {
   LIST_FOODS = '/foods',
   LIST_CUSTOMERS = '/customers',
   LIST_DAILY_EVENTS = '/daily-events',
+  MENU_ATTENDANCE = '/menu-attendance',
 }
