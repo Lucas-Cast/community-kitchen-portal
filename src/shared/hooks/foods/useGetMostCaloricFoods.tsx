@@ -1,0 +1,32 @@
+import { useState, useCallback } from 'react';
+import { toast } from 'sonner';
+import { foodService } from '@/shared/services/food/food';
+import { Food } from '@/shared/types/food';
+
+export function useGetMostCaloricFoods(onSuccess?: (foods: Food[]) => void, onError?: (err: unknown) => void) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const getMostCaloricFoods = useCallback(
+    async (page: number, limit: number) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const foods = await foodService.getMostCaloricFoods(page, limit);
+        onSuccess?.(foods);
+        return foods;
+      } catch (err) {
+        const errorMessage = (err as Error).message || 'Erro ao buscar alimentos mais calóricos.';
+        setError(errorMessage);
+        toast.error(errorMessage);
+        onError?.(err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [onSuccess, onError],
+  );
+
+  return { getMostCaloricFoods, loading, error };
+}

@@ -6,6 +6,7 @@ import { useFoods } from '@/shared/hooks/foods/useFoods'
 import FoodCreateButton from './FoodCreateButton'
 import { useFoodSearch } from '@/shared/hooks/foods/useFoodSearch'
 import SearchBox from '../SearchBox'
+import FoodReport from '../FoodReport/FoodReport'
 
 export default function FoodTable() {
   const foodData = useFoods()
@@ -64,6 +65,7 @@ export default function FoodTable() {
             disabled={searchLoading}
             placeholder="Buscar comida por nome"
           />
+          <FoodReport />
         </div>
       <div className="flex justify-end mb-4">
         <FoodCreateButton onCreate={handleCreate} />
