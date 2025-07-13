@@ -7,9 +7,10 @@ import {
   Pizza,
   Search,
   Users,
+  ChartNoAxesColumn,
   UtensilsCrossed,
   ClipboardList,
-  Clock
+  Clock,
 } from 'lucide-react'
 import {
   SidebarMenuItem,
@@ -53,7 +54,7 @@ const items = [
       },
     ],
   },
-    {
+  {
     title: 'Eventos Diários',
     url: '/daily-events',
     icon: Clock,
@@ -70,8 +71,19 @@ const items = [
   },
   {
     title: 'Clientes',
-    url: '/customers',
     icon: Users,
+    subItems: [
+      {
+        title: 'Gerenciar Clientes',
+        url: '/customers',
+        icon: Users,
+      },
+      {
+        title: 'Estatísticas',
+        url: '/customers-statistics',
+        icon: ChartNoAxesColumn,
+      },
+    ],
   },
 ]
 
