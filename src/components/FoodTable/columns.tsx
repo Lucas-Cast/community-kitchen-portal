@@ -32,7 +32,7 @@ export const getColumns = (
   },
   {
     id: 'carb',
-    header: () => <div className="text-left">Carbohidrato</div>,
+    header: () => <div className="text-left">Carboidrato</div>,
     cell: ({ row }) => (
       <div className="text-left font-medium">
         {row.original.nutritionFacts.carbohydrates.toLocaleString('pt-BR')}
