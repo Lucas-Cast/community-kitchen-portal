@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { menuService } from '../../services/menu/menu'
 import { CreateMenuRequest } from '../../types/menu'
 
-export function useCreateMenu() {
+export function useUpsertMenu() {
   const createMenu = useCallback(async (request?: CreateMenuRequest) => {
     if (!request) return
 
@@ -12,7 +12,16 @@ export function useCreateMenu() {
       .catch(error => {})
   }, [])
 
+  const updateMenu = useCallback(async (id: number, request: CreateMenuRequest) => {
+    if (!id || !request) return
+
+    await menuService
+      .updateMenu(id, request)
+      .then(response => {})
+      .catch(error => {})
+  }, [])
+
   return useMemo(() => {
-    return createMenu
-  }, [createMenu])
+    return { createMenu, updateMenu }
+  }, [createMenu, updateMenu])
 }
