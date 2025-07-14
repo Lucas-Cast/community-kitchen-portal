@@ -38,6 +38,9 @@ export function useDishes() {
   }, [fetchDishes])
 
   return useMemo(() => {
-    return dishData
-  }, [dishData])
+    return {
+      ...dishData,
+      refetch: fetchDishes,
+    }
+  }, [dishData, fetchDishes])
 }

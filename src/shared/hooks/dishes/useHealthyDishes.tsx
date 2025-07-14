@@ -37,5 +37,10 @@ export function useHealthyDishes() {
     fetchHealthyDishes()
   }, [fetchHealthyDishes])
 
-  return useMemo(() => dishData, [dishData])
+  return useMemo(() => {
+    return {
+      ...dishData,
+      refetch: fetchHealthyDishes,
+    }
+  }, [dishData, fetchHealthyDishes])
 }
