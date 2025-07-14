@@ -141,6 +141,7 @@ export function ActionsColumn<T>({
           variant="form"
           size="xl"
           formId="edit-form"
+          cancelText="Cancelar"
         >
           {editData ? (
             <EditForm
