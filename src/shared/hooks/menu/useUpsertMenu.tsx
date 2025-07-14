@@ -1,27 +1,74 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useState } from 'react'
+import { toast } from 'sonner'
 import { menuService } from '../../services/menu/menu'
 import { CreateMenuRequest } from '../../types/menu'
 
-export function useUpsertMenu() {
-  const createMenu = useCallback(async (request?: CreateMenuRequest) => {
-    if (!request) return
+function getErrorMessage(err: any): string {
+  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
+}
 
-    await menuService
-      .createMenu(request)
-      .then(response => {})
-      .catch(error => {})
-  }, [])
+export function useUpsertMenu(onSuccess?: () => void, onError?: (err: unknown) => void) {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const updateMenu = useCallback(async (id: number, request: CreateMenuRequest) => {
-    if (!id || !request) return
+  const createMenu = useCallback(
+    async (request: CreateMenuRequest) => {
+      if (!request) return
 
-    await menuService
-      .updateMenu(id, request)
-      .then(response => {})
-      .catch(error => {})
-  }, [])
+      setIsLoading(true)
+      setError(null)
 
-  return useMemo(() => {
-    return { createMenu, updateMenu }
-  }, [createMenu, updateMenu])
+      return menuService
+        .createMenu(request)
+        .then(() => {
+          toast.success('Menu criado com sucesso!')
+          onSuccess?.()
+        })
+        .catch(err => {
+          const message = getErrorMessage(err)
+          toast.error(`Erro ao criar o menu: ${message}`)
+          setError(message)
+          onError?.(err)
+          throw err
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    },
+    [onSuccess, onError]
+  )
+
+  const updateMenu = useCallback(
+    async (id: number, request: CreateMenuRequest) => {
+      if (!id || !request) return
+
+      setIsLoading(true)
+      setError(null)
+
+      return menuService
+        .updateMenu(id, request)
+        .then(() => {
+          toast.success('Menu atualizado com sucesso!')
+          onSuccess?.()
+        })
+        .catch(err => {
+          const message = getErrorMessage(err)
+          toast.error(`Erro ao atualizar o menu: ${message}`)
+          setError(message)
+          onError?.(err)
+          throw err
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    },
+    [onSuccess, onError]
+  )
+
+  return {
+    createMenu,
+    updateMenu,
+    isLoading,
+    error,
+  }
 }

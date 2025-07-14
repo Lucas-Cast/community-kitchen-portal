@@ -17,9 +17,10 @@ import { WeekDay } from '@/shared/enums/week-days'
 
 interface CreateMenuFormProps {
   data?: Menu
+  type: String
 }
 
-export default function CreateMenuForm({ data }: CreateMenuFormProps) {
+export default function CreateMenuForm({ data, type }: CreateMenuFormProps) {
   const { data: dailyEventData } = useDailyEvents()
   const { data: dishesData } = useDishes()
   const [optmisticDishesData] = useOptimistic(dishesData || [])
@@ -56,8 +57,15 @@ export default function CreateMenuForm({ data }: CreateMenuFormProps) {
       activationDate: new Date().toISOString(),
     }
 
-    if (!data) await createMenu(request).then(() => window.location.reload())
-    else await updateMenu(data.id, request).then(() => window.location.reload())
+    if (!data) {
+      await createMenu(request).then(() => {
+        setTimeout(() => window.location.reload(), 1000)
+      })
+    } else {
+      await updateMenu(data.id, request).then(() => {
+        setTimeout(() => window.location.reload(), 1000)
+      })
+    }
   }, [createMenu, user.user?.nome, optimisticdailyEventData, optmisticDishesData, data])
 
   return (
@@ -151,7 +159,8 @@ export default function CreateMenuForm({ data }: CreateMenuFormProps) {
         />
 
         <div className="flex justify-end">
-          <Button type="submit">{data ? 'Atualizar Menu' : 'Criar Menu'}</Button>
+          {type == 'create' && <Button type="submit">Criar Menu</Button>}
+          {type == 'edit' && <Button type="submit">Atualizar Menu</Button>}
         </div>
       </form>
     </Form>

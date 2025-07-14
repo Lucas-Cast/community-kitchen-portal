@@ -65,7 +65,7 @@ export const columns: ColumnDef<Menu>[] = [
           rowData={row.original}
           deleteUrl={data => `${Routes.MENUS}/${data.id}`}
           onDelete={() => window.location.reload()}
-          CustomEditForm={<CreateMenuForm data={row.original} />}
+          CustomEditForm={<CreateMenuForm data={row.original} type="edit" />}
           isCustomEdit
         />
       )
