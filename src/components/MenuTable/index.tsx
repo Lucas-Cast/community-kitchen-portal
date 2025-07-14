@@ -18,7 +18,7 @@ export default function MenuTable() {
         <Button onClick={() => setOpen(true)}>Novo Menu</Button>
       </div>
       <Modal title="Novo Menu" isOpen={open} onClose={() => setOpen(false)} variant="viewer">
-        <CreateMenuForm />
+        <CreateMenuForm type="create" />
       </Modal>
 
       <DataTable columns={columns} data={optimisticMenusData} />
