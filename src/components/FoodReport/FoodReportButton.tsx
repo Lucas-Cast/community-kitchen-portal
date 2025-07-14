@@ -12,7 +12,7 @@ type FoodReportButtonProps = {
   children: ReactNode;
 } & React.ComponentProps<'button'> & VariantProps<typeof buttonVariants> & { asChild?: boolean };
 
-export function FoodReportButton({ label = 'Gerar Relatório', children, ...props }: FoodReportButtonProps) {
+export function FoodReportButton({ label = 'Gerar Gráfico', children, ...props }: FoodReportButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,9 +23,10 @@ export function FoodReportButton({ label = 'Gerar Relatório', children, ...prop
       <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
-        title="Relatório Nutricional de Comida"
+        title="Gráfico Nutricional de Comida"
         size="xl"
         variant="form"
+        confirmText='Gerar gráfico'
         animation="fade"
         position="center"
         formId="food-report-form"

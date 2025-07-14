@@ -60,11 +60,6 @@ const items = [
     icon: Clock,
   },
   {
-    title: 'Search',
-    url: '#',
-    icon: Search,
-  },
-  {
     title: 'Comidas',
     url: '/foods',
     icon: Pizza,

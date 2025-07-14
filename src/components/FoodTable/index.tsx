@@ -65,10 +65,10 @@ export default function FoodTable() {
             disabled={searchLoading}
             placeholder="Buscar comida por nome"
           />
-          <FoodReport />
         </div>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end">
         <FoodCreateButton onCreate={handleCreate} />
+        <FoodReport />
       </div>
       </div>
       <DataTable columns={columns} data={data} />

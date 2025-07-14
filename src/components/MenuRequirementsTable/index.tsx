@@ -9,11 +9,14 @@ import MenuRequirementDeactivateButton from './MenuRequirementDeactivateButton'
 import { useMenuRequirements } from '@/shared/hooks/menuRequirements/useMenuRequirements'
 import { useDeactivateMenuRequirement } from '@/shared/hooks/menuRequirements/useDeactivateMenuRequirement'
 import { useActiveMenuRequirements } from '@/shared/hooks/menuRequirements/useActiveMenuRequirements'
+import MenuRequirementActivateButton from './MenuRequirementActivateButton'
+import { useInactiveMenuRequirements } from '@/shared/hooks/menuRequirements/useInactiveMenuRequirement'
 
 export default function MenuRequirementTable() {
   const { data, isLoading, error } = useMenuRequirements();
   const { deactivate } = useDeactivateMenuRequirement();
   const { refetch: refetchActiveMenuRequirements } = useActiveMenuRequirements();
+  const { refetch: refetchInactiveMenuRequirements } = useInactiveMenuRequirements();
   const [dataState, setDataState] = useState<MenuRequirement[]>(data || []);
 
   useEffect(() => {
@@ -23,11 +26,13 @@ export default function MenuRequirementTable() {
   function handleCreate(newMenuRequirement: MenuRequirement) {
     setDataState(prev => [...prev, newMenuRequirement]);
     refetchActiveMenuRequirements();
+    refetchInactiveMenuRequirements();
   }
 
   async function handleDelete(menuRequirement: MenuRequirement) {
     setDataState(prev => prev.filter(mr => mr.id !== menuRequirement.id));
     refetchActiveMenuRequirements();
+    refetchInactiveMenuRequirements();
   }
 
   async function handleDeactivate(menuRequirement: MenuRequirement) {
@@ -36,6 +41,15 @@ export default function MenuRequirementTable() {
       prev.map(mr => (mr.id === menuRequirement.id ? { ...mr, isActive: false } : mr))
     );
     refetchActiveMenuRequirements();
+    refetchInactiveMenuRequirements();
+  }
+
+  async function handleActivate(menuRequirement: MenuRequirement) {
+    setDataState(prev =>
+      prev.map(mr => (mr.id === menuRequirement.id ? { ...mr, isActive: true } : mr))
+    );
+    refetchActiveMenuRequirements();
+    refetchInactiveMenuRequirements();
   }
 
   function handleEdit(updatedMenuRequirement: MenuRequirement) {
@@ -53,8 +67,15 @@ export default function MenuRequirementTable() {
     <div className="container mx-auto py-10">
       <div className="flex justify-between mb-4">
         <CreateMenuRequirementButton onCreate={handleCreate} />
-        <div className="flex justify-end">
-          <MenuRequirementDeactivateButton onDeactivate={handleDeactivate} refetch={refetchActiveMenuRequirements}/>
+        <div className="flex justify-end gap-2">
+          <MenuRequirementActivateButton
+            onActivate={handleActivate}
+            refetch={refetchInactiveMenuRequirements}
+          />
+          <MenuRequirementDeactivateButton
+            onDeactivate={handleDeactivate}
+            refetch={refetchActiveMenuRequirements}
+          />
         </div>
       </div>
       <VerticalDataTable

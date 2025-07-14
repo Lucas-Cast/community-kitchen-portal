@@ -23,7 +23,7 @@ type FoodReportFormProps = {
   setError: (error: string | null) => void;
   setLoading: (loading: boolean) => void;
   setChartTitle: (title: string) => void;
-  onFiltersChange: (filters: ReportFilters) => void; // Nova prop
+  onFiltersChange: (filters: ReportFilters) => void;
 };
 
 const NUTRIENT_NAMES_PT: Record<keyof NutritionFacts, string> = {
@@ -50,7 +50,6 @@ export function FoodReportForm({ onSubmit, setError, setLoading, setChartTitle, 
   const { findFoodsByMaxNutrient, loading: maxNutrientLoading, error: maxNutrientError } = useFindFoodsByMaxNutrient();
   const { findFoodsByMinNutrient, loading: minNutrientLoading, error: minNutrientError } = useFindFoodsByMinNutrient();
 
-  // Atualiza o componente pai sempre que os filtros mudarem
   useEffect(() => {
     onFiltersChange(filters);
   }, [filters, onFiltersChange]);
@@ -171,12 +170,6 @@ export function FoodReportForm({ onSubmit, setError, setLoading, setChartTitle, 
           </div>
         </>
       )}
-
-      <div className="md:col-span-2">
-        <Button type="submit" disabled={isLoading || (filters.filterType !== 'most-caloric' && !filters.amount) || !filters.limit}>
-          Gerar Gráfico
-        </Button>
-      </div>
     </form>
   );
 }

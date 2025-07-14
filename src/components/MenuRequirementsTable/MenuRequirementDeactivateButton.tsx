@@ -16,8 +16,8 @@ export default function MenuRequirementDeactivateButton({ onDeactivate, refetch 
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} className="bg-red-600 hover:bg-red-700 text-white">
-        🚫 Desativar Requisito
+      <Button onClick={() => setOpen(true)} variant={'destructive'}>
+        Desativar Requisito
       </Button>
 
       <Modal
