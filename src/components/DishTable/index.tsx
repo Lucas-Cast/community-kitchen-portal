@@ -70,16 +70,25 @@ export default function DishTable() {
     }
   }, [viewMode, pendingFilterData])
 
+  function refetchAllDishes() {
+    allDishes.refetch()
+    healthyDishes.refetch()
+    unhealthyDishes.refetch()
+  }
+
   function handleDelete(dishToDelete: Dish) {
     setData(prev => prev.filter(dish => dish.id !== dishToDelete.id))
+    refetchAllDishes()
   }
 
   function handleEdit(updatedDish: Dish) {
     setData(prev => prev.map(dish => (dish.id === updatedDish.id ? updatedDish : dish)))
+    refetchAllDishes()
   }
 
   function handleCreate(newDish: Dish) {
     setData(prev => [...prev, newDish])
+    refetchAllDishes()
   }
 
   function applyFilteredDishes(filteredData: Dish[]) {

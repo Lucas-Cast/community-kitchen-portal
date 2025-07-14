@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
 import { Dish } from '@/shared/types/dish'
+import { toast } from 'sonner'
+
+function getErrorMessage(err: any): string {
+  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
+}
 
 export function useFilteredDishes() {
   const [data, setData] = useState<Dish[] | null>(null)
@@ -18,16 +23,22 @@ export function useFilteredDishes() {
     }): Promise<Dish[]> => {
       setLoading(true)
       setError(null)
-      try {
-        const dishes = await dishService.getFilteredDishes(filters)
-        setData(dishes)
-        return dishes
-      } catch (err) {
-        setError((err as Error).message ?? 'Erro ao buscar pratos filtrados')
-        return []
-      } finally {
-        setLoading(false)
-      }
+
+      return dishService
+        .getFilteredDishes(filters)
+        .then(dishes => {
+          setData(dishes)
+          return dishes
+        })
+        .catch(err => {
+          const message = getErrorMessage(err)
+          setError(message)
+          toast.error(`Erro ao buscar pratos filtrados: ${message}`)
+          return []
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     },
     []
   )

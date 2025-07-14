@@ -1,35 +1,35 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { dishService } from '../../services/dish/dish'
 import { Dish } from '../../types/dish'
+import { toast } from 'sonner'
+
+function getErrorMessage(err: any): string {
+  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
+}
 
 export function useHealthyDishes() {
-  const [dishData, setDishData] = useState<{
-    data: Dish[] | undefined
-    error: string | undefined
-    isLoading: boolean
-  }>({
-    data: undefined,
-    error: undefined,
-    isLoading: false,
-  })
+  const [data, setData] = useState<Dish[] | undefined>(undefined)
+  const [error, setError] = useState<string | undefined>(undefined)
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchHealthyDishes = useCallback(async () => {
-    setDishData(prev => ({ ...prev, isLoading: true }))
-    await dishService
+    setIsLoading(true)
+    setError(undefined)
+
+    return dishService
       .getHealthyDishes()
       .then(response => {
-        setDishData({
-          data: response,
-          error: undefined,
-          isLoading: false,
-        })
+        setData(response)
+        return response
       })
       .catch(error => {
-        setDishData({
-          data: undefined,
-          error: error.message ?? 'Erro ao buscar pratos saudáveis',
-          isLoading: false,
-        })
+        const message = getErrorMessage(error)
+        toast.error(`Erro ao buscar pratos saudáveis: ${message}`)
+        setError(message)
+        setData(undefined)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }, [])
 
@@ -37,5 +37,12 @@ export function useHealthyDishes() {
     fetchHealthyDishes()
   }, [fetchHealthyDishes])
 
-  return useMemo(() => dishData, [dishData])
+  return useMemo(() => {
+    return {
+      data,
+      error,
+      isLoading,
+      refetch: fetchHealthyDishes,
+    }
+  }, [data, error, isLoading, fetchHealthyDishes])
 }
