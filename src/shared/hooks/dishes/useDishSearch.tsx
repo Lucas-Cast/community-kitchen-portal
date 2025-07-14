@@ -1,43 +1,53 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
 import { Dish } from '@/shared/types/dish'
 import { toast } from 'sonner'
+
+function getErrorMessage(err: any): string {
+  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
+}
 
 export function useDishSearch() {
   const [results, setResults] = useState<Dish[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function search(term: string, type: 'all' | 'healthy' | 'unhealthy' = 'all') {
-    if (!term.trim()) return
+  const search = useCallback(
+    async (term: string, type: 'all' | 'healthy' | 'unhealthy' = 'all') => {
+      if (!term.trim()) return
 
-    setLoading(true)
-    setError(null)
+      setLoading(true)
+      setError(null)
 
-    try {
-      const [byNameResult, byDescriptionResult] = await Promise.allSettled([
+      return Promise.allSettled([
         dishService.searchDishesByName(term, type),
         dishService.searchDishesByDescription(term, type),
       ])
+        .then(resultsSettled => {
+          const byName = resultsSettled[0].status === 'fulfilled' ? resultsSettled[0].value : []
+          const byDescription =
+            resultsSettled[1].status === 'fulfilled' ? resultsSettled[1].value : []
 
-      const byName = byNameResult.status === 'fulfilled' ? byNameResult.value : []
-      const byDescription =
-        byDescriptionResult.status === 'fulfilled' ? byDescriptionResult.value : []
+          const combined = [...byName, ...byDescription]
+          const uniqueDishes = combined.filter(
+            (dish, index, self) => index === self.findIndex(d => d.id === dish.id)
+          )
 
-      const combined = [...byName, ...byDescription]
-      const uniqueDishes = combined.filter(
-        (dish, index, self) => index === self.findIndex(d => d.id === dish.id)
-      )
-
-      setResults(uniqueDishes)
-    } catch (err) {
-      console.error(err)
-      setError('Erro ao buscar pratos.')
-      toast.error('Erro ao buscar pratos.')
-    } finally {
-      setLoading(false)
-    }
-  }
+          setResults(uniqueDishes)
+          return uniqueDishes
+        })
+        .catch(err => {
+          const message = getErrorMessage(err)
+          setError(message)
+          toast.error(`Erro ao buscar pratos: ${message}`)
+          throw err
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    },
+    []
+  )
 
   return { search, results, loading, error }
 }
