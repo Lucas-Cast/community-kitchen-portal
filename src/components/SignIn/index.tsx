@@ -13,7 +13,6 @@ import {
 } from '../ui/card'
 import { Input } from '../ui/input'
 import { useAuth } from '@/shared/hooks/useAuth'
-import { useState } from 'react'
 
 interface SignInProps {
   setIsSignUp: (value: boolean) => void
@@ -21,8 +20,16 @@ interface SignInProps {
 
 export function SignIn({ setIsSignUp }: SignInProps) {
   const { signIn } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email')?.toString().trim() ?? ''
+    const password = formData.get('password')?.toString() ?? ''
+
+    signIn({ email, senha: password })
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -37,16 +44,16 @@ export function SignIn({ setIsSignUp }: SignInProps) {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <form>
+          <form id="sign-in-form" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
-                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
@@ -55,20 +62,16 @@ export function SignIn({ setIsSignUp }: SignInProps) {
                 </div>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   required
-                  onChange={e => setPassword(e.target.value)}
                 />
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button
-            type="submit"
-            className="w-full"
-            onClick={() => signIn({ email, senha: password })}
-          >
+          <Button type="submit" form="sign-in-form" className="w-full">
             Login
           </Button>
         </CardFooter>
