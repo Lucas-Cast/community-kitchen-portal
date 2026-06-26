@@ -2,7 +2,7 @@ import { useFoods } from '@/shared/hooks/foods/useFoods'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select'
 import { Button } from '../ui/button'
 import { SimplifiedFood } from '@/shared/types/food'
-import { Minus, Trash2 } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 
 type IngredientProps = {
   food?: SimplifiedFood

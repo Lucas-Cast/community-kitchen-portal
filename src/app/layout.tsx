@@ -7,8 +7,6 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
 import { AppSidebar } from '@/components/AppSidebar'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'sonner'
-import { useAuth } from '@/shared/hooks/useAuth'
-import { useEffect } from 'react'
 import { AuthGuard } from '@/components/AuthGuard'
 
 const geistSans = Geist({

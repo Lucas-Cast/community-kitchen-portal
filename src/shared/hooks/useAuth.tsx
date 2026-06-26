@@ -50,7 +50,7 @@ export function useAuth() {
           throw error
         })
     },
-    [router]
+    [signIn]
   )
 
   const tokenValidate = useCallback(async () => {
@@ -60,7 +60,7 @@ export function useAuth() {
     const userResponse =
       tokenValidateResponse && (await userService.getUserById(tokenValidateResponse.user.id))
     setUser(userResponse ?? null)
-  }, [setUser])
+  }, [router, setUser])
 
   return useMemo(
     () => ({

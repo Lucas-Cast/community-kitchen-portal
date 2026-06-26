@@ -24,7 +24,7 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
   const [newFoods, setNewFoods] = useState<{ name: string; quantity: string }[]>([])
 
   const { data: allFoods = [] } = useFoods()
-  const { updateDish, isUpdating } = useUpdateDishes()
+  const { updateDish } = useUpdateDishes()
 
   function handleFoodChange(index: number, selectedName: string) {
     const ingredient = allFoods.find(f => f.name === selectedName)
@@ -93,7 +93,7 @@ export function DishEditForm({ data, onSuccess }: DishEditFormProps) {
     }
 
     const updatedDish = await updateDish(data, payload)
-    onSuccess(updatedDish)
+    if (updatedDish) onSuccess(updatedDish)
   }
 
   return (

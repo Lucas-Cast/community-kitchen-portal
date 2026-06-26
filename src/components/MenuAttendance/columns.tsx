@@ -1,8 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { ActionsColumn } from '../ActionsColumn/ActionsColumn'
-import { Routes } from '@/shared/enums/routes'
 import { MenuAttendance } from '@/shared/types/menu-attendance'
-import MenuAttendanceForm from './MenuAttendanceForm'
 
 export const columns: ColumnDef<MenuAttendance>[] = [
   {

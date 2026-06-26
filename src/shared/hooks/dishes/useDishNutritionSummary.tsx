@@ -1,11 +1,8 @@
+import { getErrorMessage } from '@/shared/utils/get-error-message'
 import { useCallback, useState } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
 import { DishNutritionSummary } from '@/shared/types/dish-nutrition-summary'
 import { toast } from 'sonner'
-
-function getErrorMessage(err: any): string {
-  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
-}
 
 export function useDishNutritionSummary() {
   const [nutritionSummary, setNutritionSummary] = useState<DishNutritionSummary | null>(null)

@@ -1,11 +1,8 @@
+import { getErrorMessage } from '@/shared/utils/get-error-message'
 import { useState, useCallback } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
 import { Dish } from '@/shared/types/dish'
 import { toast } from 'sonner'
-
-function getErrorMessage(err: any): string {
-  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
-}
 
 export function useFilteredDishes() {
   const [data, setData] = useState<Dish[] | null>(null)

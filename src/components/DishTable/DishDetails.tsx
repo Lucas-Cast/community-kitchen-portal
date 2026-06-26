@@ -26,7 +26,7 @@ export function DishDetails({ data }: DishDetailsProps) {
     }
 
     fetchAll()
-  }, [data.id])
+  }, [data.id, fetchHealthyStatus, fetchNutritionSummary])
 
   const isLoading = loadingHealthy || loadingNutrition || !loaded
 

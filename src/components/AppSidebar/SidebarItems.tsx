@@ -5,7 +5,6 @@ import {
   Home,
   Utensils,
   Pizza,
-  Search,
   Users,
   ChartNoAxesColumn,
   UtensilsCrossed,
