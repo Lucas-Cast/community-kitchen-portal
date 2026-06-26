@@ -1,11 +1,8 @@
+import { getErrorMessage } from '@/shared/utils/get-error-message'
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 import { menuService } from '../../services/menu/menu'
 import { CreateMenuRequest } from '../../types/menu'
-
-function getErrorMessage(err: any): string {
-  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
-}
 
 export function useUpsertMenu(onSuccess?: () => void, onError?: (err: unknown) => void) {
   const [isLoading, setIsLoading] = useState(false)

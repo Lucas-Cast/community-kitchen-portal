@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/shared/utils/get-error-message'
 import { useCallback, useState } from 'react'
 import { dishService } from '@/shared/services/dish/dish'
 import { Dish } from '@/shared/types/dish'
@@ -6,10 +7,6 @@ import { toast } from 'sonner'
 type DishHealthyResponse = {
   dish: Dish
   healthy: boolean
-}
-
-function getErrorMessage(err: any): string {
-  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
 }
 
 export function useDishHealthyStatus() {

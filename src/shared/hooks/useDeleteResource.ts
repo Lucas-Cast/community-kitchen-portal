@@ -22,6 +22,7 @@ export function useDeleteResource<T>({ getUrl, onSuccess, onError }: UseDeleteRe
       } catch (err) {
         console.log(err)
         toast.error('Erro ao deletar item.')
+        onError?.(err)
       } finally {
         setIsDeleting(false)
       }

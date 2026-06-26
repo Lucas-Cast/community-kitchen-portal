@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import React, { useState } from 'react'
+import React from 'react'
 
 type Props = {
   viewMode: 'all' | 'healthy' | 'unhealthy'

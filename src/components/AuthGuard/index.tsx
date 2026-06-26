@@ -18,6 +18,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     }
 
     if (!user) router.push('/auth')
+    // Intentionally runs only on navigation (pathname change).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   return <>{children}</>

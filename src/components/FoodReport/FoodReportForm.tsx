@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Food } from '@/shared/types/food';
 import { NutritionFacts } from '@/shared/types/nutrition-facts';
 import { useGetMostCaloricFoods } from '@/shared/hooks/foods/useGetMostCaloricFoods';
@@ -46,9 +45,9 @@ export function FoodReportForm({ onSubmit, setError, setLoading, setChartTitle, 
     limit: '10',
   });
 
-  const { getMostCaloricFoods, loading: mostCaloricLoading, error: mostCaloricError } = useGetMostCaloricFoods();
-  const { findFoodsByMaxNutrient, loading: maxNutrientLoading, error: maxNutrientError } = useFindFoodsByMaxNutrient();
-  const { findFoodsByMinNutrient, loading: minNutrientLoading, error: minNutrientError } = useFindFoodsByMinNutrient();
+  const { getMostCaloricFoods, error: mostCaloricError } = useGetMostCaloricFoods();
+  const { findFoodsByMaxNutrient, error: maxNutrientError } = useFindFoodsByMaxNutrient();
+  const { findFoodsByMinNutrient, error: minNutrientError } = useFindFoodsByMinNutrient();
 
   useEffect(() => {
     onFiltersChange(filters);
@@ -96,8 +95,6 @@ export function FoodReportForm({ onSubmit, setError, setLoading, setChartTitle, 
       setLoading(false);
     }
   };
-
-  const isLoading = mostCaloricLoading || maxNutrientLoading || minNutrientLoading;
 
   return (
     <form id="food-report-form" onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2 mb-6">

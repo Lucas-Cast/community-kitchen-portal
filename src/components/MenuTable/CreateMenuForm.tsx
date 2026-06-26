@@ -17,7 +17,7 @@ import { WeekDay } from '@/shared/enums/week-days'
 
 interface CreateMenuFormProps {
   data?: Menu
-  type: String
+  type: string
 }
 
 export default function CreateMenuForm({ data, type }: CreateMenuFormProps) {
@@ -66,7 +66,7 @@ export default function CreateMenuForm({ data, type }: CreateMenuFormProps) {
         setTimeout(() => window.location.reload(), 1000)
       })
     }
-  }, [createMenu, user.user?.nome, optimisticdailyEventData, optmisticDishesData, data])
+  }, [createMenu, updateMenu, form, optimisticdailyEventData, optmisticDishesData, data])
 
   return (
     <Form {...form}>

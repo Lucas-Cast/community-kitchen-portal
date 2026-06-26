@@ -1,12 +1,9 @@
+import { getErrorMessage } from '@/shared/utils/get-error-message'
 import { dishService } from '@/shared/services/dish/dish'
 import { Dish } from '@/shared/types/dish'
 import { DishPayload } from '@/shared/types/dish-payload'
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
-
-function getErrorMessage(err: any): string {
-  return err?.response?.data?.message || err?.message || 'Erro desconhecido.'
-}
 
 export function useCreateDish(onSuccess?: (dish: Dish) => void, onError?: (err: unknown) => void) {
   const [loading, setLoading] = useState(false)

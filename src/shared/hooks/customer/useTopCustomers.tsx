@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { customerService } from '@/shared/services/customer/customer'
 import { MostFrequentCustomer } from '@/shared/types/most-frequent-customer'
 
@@ -7,7 +7,7 @@ export function useTopCustomers(page = 1, limit = 10) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
-  const fetchTopCustomers = async () => {
+  const fetchTopCustomers = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
@@ -18,11 +18,11 @@ export function useTopCustomers(page = 1, limit = 10) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [page, limit])
 
   useEffect(() => {
     fetchTopCustomers()
-  }, [page, limit])
+  }, [fetchTopCustomers])
 
   return {
     data,

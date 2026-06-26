@@ -2,10 +2,9 @@ import { useForm } from 'react-hook-form'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '../ui/form'
 import { useCallback, useOptimistic } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { useUserContext } from '@/shared/contexts/UserContext'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js'
 import { Button } from '../ui/button'
-import { CreateMenuAttendanceRequest, MenuAttendance } from '@/shared/types/menu-attendance'
+import { CreateMenuAttendanceRequest } from '@/shared/types/menu-attendance'
 import { useCustomer } from '@/shared/hooks/customer/useCustomer'
 import { useMenus } from '@/shared/hooks/menu/useMenus'
 import { useUpsertAttendance } from '@/shared/hooks/menu-attendance/useUpsertAttendance'
@@ -36,7 +35,7 @@ export default function CreateMenuForm() {
     }
 
     await createAttendance(request).then(() => window.location.reload())
-  }, [optimisticMenuData, optimisticCustomerData])
+  }, [optimisticMenuData, optimisticCustomerData, createAttendance, form])
 
   return (
     <Form {...form}>
