@@ -20,7 +20,7 @@ export function useAuth() {
 
           Cookies.set('authToken', token, {
             expires: 1,
-            secure: true,
+            secure: window.location.protocol === 'https:',
             sameSite: 'Strict',
           })
 
