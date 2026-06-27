@@ -6,7 +6,11 @@ export function createAxiosClient(baseUrl: string, authToken?: string): AxiosIns
 
   axiosInstance.interceptors.request.use(async config => {
     const token = authToken ?? Cookies.get('authToken')
-    config.headers.Authorization = `Bearer ${token}`
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+
     return config
   })
 

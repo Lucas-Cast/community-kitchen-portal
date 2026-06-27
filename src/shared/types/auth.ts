@@ -11,7 +11,7 @@ export interface SignUpRequest {
 
 export interface User {
   id: number
-  nome: string
+  nome?: string
   email: string
   is_active: boolean
 }
